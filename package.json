@@ -1,0 +1,72 @@
+{
+  "name": "nextjs-docker-base-template",
+  "version": "1.0.0",
+  "description": "A base template that will include several common tools and frameworks in a single docker container",
+  "main": "index.js",
+  "scripts": {
+    "build": "next build",
+    "dev": "next -p 3002",
+    "start": "next start",
+    "test": "jest -c config/jest.config.js --coverage --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brothatru/NextJS-Docker-Base-Template.git"
+  },
+  "author": "michael trieu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brothatru/NextJS-Docker-Base-Template/issues"
+  },
+  "homepage": "https://github.com/brothatru/NextJS-Docker-Base-Template#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
+    "@types/node": "^13.13.6",
+    "@types/react": "^16.9.35",
+    "dot-prop-immutable": "^2.1.0",
+    "next": "^9.4.4",
+    "next-redux-wrapper": "^5.0.0",
+    "node-fetch": "^2.6.0",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "typescript": "^3.9.2"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^9.4.0",
+    "@testing-library/jest-dom": "^5.8.0",
+    "@testing-library/react": "^10.0.4",
+    "@types/jest": "^25.2.3",
+    "babel-jest": "^26.0.1",
+    "child-process-promise": "^2.2.1",
+    "husky": "^4.2.5",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.2",
+    "prettier": "^2.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "ts-jest": "^26.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm test",
+      "pre-push": "npm run test && npm run build"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,md}": "prettier --write"
+  },
+  "prettier": {
+    "printWidth": 95,
+    "jsxSingleQuote": true,
+    "singleQuote": true,
+    "trailingComma": "all"
+  }
+}
