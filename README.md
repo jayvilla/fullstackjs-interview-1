@@ -11,8 +11,6 @@ This empty project includes frameworks that utilize the best practices for moder
 Any React developer can just dive in and start writing components!
 _(no more wasting set up time or stressing over config =])_
 
-I've set this repo up so that **YOU** don't have to!
-
 **Happy Coding!!!**
 
 ## Frameworks Included
@@ -70,5 +68,5 @@ Now you should be able to access via http://localhost:4000
 
 - [ ] Install zsh + powerlevel10k theme
   - For pretty terminal when ssh-ing to container
-- [ ] Split configs for dev / prod environments
-- [ ] Wire up webpack bundle analyzer
+- [x] Split configs for dev / prod environments
+- [x] Wire up webpack bundle analyzer

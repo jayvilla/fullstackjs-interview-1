@@ -4,6 +4,7 @@
   "description": "A base template that will include several common tools and frameworks in a single docker container",
   "main": "index.js",
   "scripts": {
+    "analyze": "ANALYZE=true npm run build",
     "build": "next build",
     "dev": "next -p 3002",
     "start:dev": "CONFIG_ENV=dev next start",
