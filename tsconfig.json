@@ -6,7 +6,7 @@
         "src/*"
       ],
       "@test-utils": [
-        "config/test-utils"
+        "config/jest/test-utils"
       ],
     },
     "target": "es5",

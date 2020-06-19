@@ -10,7 +10,7 @@ import '@testing-library/jest-dom/extend-expect';
  * @see https://github.com/zeit/next.js/issues/4024
  */
 import { setConfig } from 'next/config';
-import { publicRuntimeConfig } from '../next.config';
+import { publicRuntimeConfig } from '../../next.config';
 
 // Make sure you can use "publicRuntimeConfig" within tests.
 setConfig({ publicRuntimeConfig });
