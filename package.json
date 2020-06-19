@@ -6,8 +6,9 @@
   "scripts": {
     "build": "next build",
     "dev": "next -p 3002",
-    "start": "next start",
-    "test": "jest -c config/jest/jest.config.js --coverage --verbose"
+    "start:dev": "CONFIG_ENV=dev next start",
+    "start:prod": "CONFIG_ENV=prod next start",
+    "test": "CONFIG_ENV=test jest -c config/jest/jest.config.js --coverage --verbose"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "@types/node": "^13.13.6",
     "@types/react": "^16.9.35",
     "dot-prop-immutable": "^2.1.0",
+    "lodash.merge": "^4.6.2",
     "next": "^9.4.4",
     "next-redux-wrapper": "^5.0.0",
     "node-fetch": "^2.6.0",
