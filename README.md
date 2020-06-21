@@ -30,6 +30,7 @@ _(no more wasting set up time or stressing over config =])_
 - [Webpack Bundle Analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
 - [Prettier Linter](https://prettier.io/)
 - [Redux Dev Tools Extension](https://github.com/reduxjs/redux-devtools)
+- [Zsh + Powerlevel10k theme (docker container)](https://github.com/romkatv/powerlevel10k)
 
 ## Installation
 
@@ -44,7 +45,7 @@ npm i
 npm run dev
 ```
 
-This will start server at http://localhost:3002.
+This will start server at http://localhost:3000.
 
 See **package.json** for an exhaustive list of commands.
 
@@ -53,20 +54,33 @@ See **package.json** for an exhaustive list of commands.
 Build container image
 
 ```bash
-docker build -t my-next-project .
+# build image w/ local config
+docker build -f docker/local.dockerfile -t my-nextjs-project .
+
+# build image w/ dev config
+docker build -f docker/dev.dockerfile -t my-nextjs-project .
+
+# build image w/ prod config
+docker build -f docker/prod.dockerfile -t my-nextjs-project .
 ```
 
 Run container image
 
 ```bash
-docker run --name=my-next-project --rm -p 4000:3000 my-next-project
+docker run --name=my-nextjs-project --rm -p 4000:3000 my-nextjs-project
 ```
 
 Now you should be able to access via http://localhost:4000
 
+SSH into container
+
+```bash
+docker exec -it my-nextjs-project /bin/zsh
+```
+
 ## Todo
 
-- [ ] Install zsh + powerlevel10k theme
+- [x] Install zsh + powerlevel10k theme
   - For pretty terminal when ssh-ing to container
 - [x] Split configs for dev / prod environments
 - [x] Wire up webpack bundle analyzer

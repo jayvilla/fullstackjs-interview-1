@@ -6,7 +6,7 @@
   "scripts": {
     "analyze": "ANALYZE=true npm run build",
     "build": "next build",
-    "dev": "next -p 3002",
+    "dev": "next -p 3000",
     "start:dev": "CONFIG_ENV=dev next start",
     "start:prod": "CONFIG_ENV=prod next start",
     "test": "CONFIG_ENV=test jest -c config/jest/jest.config.js --coverage --verbose"
