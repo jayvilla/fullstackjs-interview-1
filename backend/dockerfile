@@ -1,0 +1,14 @@
+FROM node:14.4.0-alpine3.12
+RUN apk update \
+  && apk add ca-certificates wget \
+  && update-ca-certificates
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+  -p git \
+  -p https://github.com/zsh-users/zsh-autosuggestions \
+  -p https://github.com/zsh-users/zsh-completions
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+RUN npm install
+CMD ["npm", "run", "start:dev"]

@@ -35,6 +35,7 @@ module.exports = {
     '/kube',
     '/public/',
     '/sass/',
+    '/backend/',
   ],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
