@@ -1,7 +1,6 @@
 .git
 .gitignore
-.next
 coverage
-backend
+dist
 docker
 node_modules

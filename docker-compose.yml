@@ -19,4 +19,14 @@ services:
       dockerfile: ./dockerfile
     volumes:
       - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
+      # - /usr/src/app/node_modules
+      # - /usr/src/app/dist
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - '27018:27017'
