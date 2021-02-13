@@ -1,15 +1,22 @@
-# NextJS-Docker-Base-Template
+# Sold.com Take Home Project
 
-A base template that includes several common tools and frameworks for developing a modern-day full-stack react web application.
+The goal of this project is to gauge your fullstack capabilities and knowledge in the following areas:
+
+- React
+- Typescript
+- Component Organization
+- Existing NextJS knowledge, or the ability to pick it up quickly
+
+This project includes several common tools and frameworks for developing a modern-day full-stack react web application.
 
 Includes a dockerfile for containerized development and/or deployment.
 
 ## Summary
 
-This empty project includes frameworks that utilize the best practices for modern-day SPA (Single Page Applications) enforcing techniques such as _**code splitting, SSR (server-side rendering), material design, modular styles, state management, typing with typescript, prettier linting, unit testing, and more**_.
+This take home project includes frameworks that utilize the best practices for modern-day SPA (Single Page Applications) enforcing techniques such as _**code splitting, SSR (server-side rendering), material design, modular styles, state management, typing with typescript, prettier linting, unit testing, and more**_.
 
-Any React developer can just dive in and start writing components!
-_(no more wasting set up time or stressing over config =])_
+As a React developer, you should be able to dive in and start writing components!
+_(don't worry about setting up config =])_
 
 **Happy Coding!!!**
 
@@ -34,53 +41,34 @@ _(no more wasting set up time or stressing over config =])_
 
 ## Installation
 
-If you already have [Node.js](https://nodejs.org/en/download/) installed, and would like to continue to develop on your local machine, then skip to [Local Development section](#local-development).
+For this project you will need to first install the following:
 
-Otherwise, the other option will be to install [Docker](https://docs.docker.com/get-docker/), so that we can run things in an isolated docker container (aka isolated environment).
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker-Compose](https://docs.docker.com/compose/)
+- [NodeJS](https://nodejs.org/en/)
 
-## Local Development
+This lets us run things in an isolated docker container (aka isolated environment).
+
+Install dependencies
 
 ```bash
-npm i
-npm run dev
+npm install
 ```
-
-This will start server at http://localhost:3000.
-
-See **package.json** for an exhaustive list of commands.
 
 ## Docker Commands
 
-Build container image
+Build container
 
 ```bash
-# build image w/ local config
-docker build -f docker/local.dockerfile -t my-nextjs-project .
-
-# build image w/ dev config
-docker build -f docker/dev.dockerfile -t my-nextjs-project .
-
-# build image w/ prod config
-docker build -f docker/prod.dockerfile -t my-nextjs-project .
+docker-compose build
 ```
 
-Run container image
+Start container
 
 ```bash
-docker run --name=my-nextjs-project --rm -p 4000:3000 my-nextjs-project
+docker-compose up
 ```
 
 Now you should be able to access via http://localhost:4000
 
-SSH into container
-
-```bash
-docker exec -it my-nextjs-project /bin/zsh
-```
-
-## Todo
-
-- [x] Install zsh + powerlevel10k theme
-  - For pretty terminal when ssh-ing to container
-- [x] Split configs for dev / prod environments
-- [x] Wire up webpack bundle analyzer
+## Requirements
