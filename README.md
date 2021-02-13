@@ -55,18 +55,10 @@ Install dependencies
 npm install
 ```
 
-## Docker Commands
-
-Build container
+Start local server
 
 ```bash
-docker-compose build
-```
-
-Start container
-
-```bash
-docker-compose up
+npm start
 ```
 
 Now you should be able to access via http://localhost:4000
