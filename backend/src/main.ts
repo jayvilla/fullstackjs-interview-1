@@ -7,7 +7,7 @@ import { UsersModule } from './models/users/users.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const swagConfig = new DocumentBuilder()
     .setTitle('Users')

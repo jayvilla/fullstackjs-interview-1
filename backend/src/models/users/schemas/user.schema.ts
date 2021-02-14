@@ -15,6 +15,8 @@ export type UserDocument = User & Document;
   },
 })
 export class User implements IUser {
+  id: string;
+
   @Prop({ required: true, trim: true })
   firstName: string;
 
