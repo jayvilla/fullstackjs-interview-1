@@ -15,6 +15,14 @@ export class UsersService {
     return newUser.save();
   }
 
+  async deleteUser(id: string): Promise<any> {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    await this.userModel.deleteOne({ _id: id }).exec();
+  }
+
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
