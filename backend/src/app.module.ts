@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './models/users/users.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://root:example@mongo:27017')],
+  imports: [
+    MongooseModule.forRoot('mongodb://api_user:api1234@mongo:27017/interview-nestjs'),
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
