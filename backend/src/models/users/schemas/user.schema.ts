@@ -15,20 +15,19 @@ export type UserDocument = User & Document;
   },
 })
 export class User implements IUser {
-  @Prop({ required: true })
+  @Prop({ required: true, trim: true })
   firstName: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, trim: true })
   lastName: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true, lowercase: true, index: true, trim: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true, trim: true })
   phoneNumber: string;
 
   createdAt: Date;
-
   updatedAt: Date;
 }
 
