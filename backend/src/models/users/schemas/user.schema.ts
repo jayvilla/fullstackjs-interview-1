@@ -1,10 +1,20 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Date, Document } from 'mongoose';
+import { IUser } from '../interfaces/user.interface';
 
 export type UserDocument = User & Document;
 
-@Schema()
-export class User {
+@Schema({
+  timestamps: true,
+  toJSON: {
+    transform: (doc: UserDocument, ret) => {
+      delete ret.__v;
+      ret.id = ret._id;
+      delete ret._id;
+    },
+  },
+})
+export class User implements IUser {
   @Prop({ required: true })
   firstName: string;
 
@@ -16,6 +26,10 @@ export class User {
 
   @Prop({ required: true })
   phoneNumber: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
