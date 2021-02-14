@@ -70,7 +70,10 @@
   "prettier": {
     "printWidth": 95,
     "jsxSingleQuote": true,
+    "semi": true,
     "singleQuote": true,
-    "trailingComma": "all"
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false
   }
 }
