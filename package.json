@@ -33,6 +33,7 @@
     "dot-prop-immutable": "^2.1.0",
     "lodash.merge": "^4.6.2",
     "next": "^10.0.0",
+    "next-iron-session": "^4.1.11",
     "next-redux-wrapper": "^6.0.0",
     "node-fetch": "^2.6.1",
     "node-sass": "^4.14.1",

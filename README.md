@@ -64,3 +64,10 @@ npm start
 Now you should be able to access via http://localhost:4000
 
 ## Requirements
+
+**Todo**
+
+## Todo
+
+- [ ] [integrate nextjs login with nestjs auth](https://github.com/vercel/next.js/tree/canary/examples/with-iron-session)
+- [ ] Add logout functionality
