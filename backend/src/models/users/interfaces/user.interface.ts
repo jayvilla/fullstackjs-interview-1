@@ -1,7 +1,7 @@
-import { Date } from 'mongoose';
+import { Date, ObjectId } from 'mongoose';
 
 export interface IUser {
-  id: string;
+  id: ObjectId;
   firstName: string;
   lastName: string;
   email: string;

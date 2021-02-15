@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
@@ -15,7 +16,7 @@ export class UsersService {
     return newUser.save();
   }
 
-  async deleteUser(id: string): Promise<any> {
+  async deleteUser(id: ObjectId): Promise<any> {
     const user = await this.findById(id);
     if (!user) {
       throw new NotFoundException();
@@ -27,7 +28,7 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: ObjectId): Promise<User> {
     const user = await this.userModel.findById(id).exec();
     if (!user) {
       throw new NotFoundException();
@@ -35,7 +36,7 @@ export class UsersService {
     return user.toJSON();
   }
 
-  async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async updateUser(id: ObjectId, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findById(id);
     await this.userModel
       .updateOne(
@@ -52,6 +53,7 @@ export class UsersService {
   }
 
   async search(searchUserDto: SearchUserDto): Promise<User[]> {
-    return this.userModel.find(searchUserDto).exec();
+    const res = await this.userModel.find(searchUserDto).exec();
+    return res.map((r) => r.toJSON());
   }
 }

@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, UseFilters } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ObjectId } from 'mongodb';
 import { MongoExceptionFilter } from 'src/common/exceptions/mongo-exception.filter';
+import { ParseObjectIdPipe } from 'src/common/pipes/parse-object-id.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -27,33 +29,41 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: `Find a user by id` })
+  @ApiParam({ name: 'id', type: 'string' })
   @ApiResponse({ status: 404, description: `Not Found` })
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<User> {
+  async findById(@Param('id', ParseObjectIdPipe) id: ObjectId): Promise<User> {
     return await this.usersService.findById(id);
   }
 
-  @ApiOperation({ summary: `Update a user given an id` })
-  @ApiResponse({ status: 404, description: `Not Found` })
-  @Post(':id')
-  async updateUser(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ): Promise<User> {
-    return await this.usersService.updateUser(id, updateUserDto);
-  }
-
-  @ApiOperation({ summary: `Search for a user` })
+  /**
+   * This POST route needs to come BEFORE POST /:id
+   *
+   * see https://github.com/nestjs/nest/issues/995
+   */
+  @ApiOperation({ summary: `Search for users that match specific criteria` })
   @Post('search')
   async search(@Body() searchUserDto: SearchUserDto): Promise<User[]> {
     return await this.usersService.search(searchUserDto);
   }
 
+  @ApiOperation({ summary: `Update a user given an id` })
+  @ApiParam({ name: 'id', type: 'string' })
+  @ApiResponse({ status: 404, description: `Not Found` })
+  @Post(':id')
+  async updateUser(
+    @Param('id', ParseObjectIdPipe) id: ObjectId,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    return await this.usersService.updateUser(id, updateUserDto);
+  }
+
   @ApiOperation({ summary: `Delete a user by id` })
-  @Delete(':id')
+  @ApiParam({ name: 'id', type: 'string' })
   @ApiResponse({ status: 200, description: `Successfully deleted` })
   @ApiResponse({ status: 404, description: `Not Found` })
-  async removeUser(@Param('id') id: string): Promise<void> {
+  @Delete(':id')
+  async removeUser(@Param('id', ParseObjectIdPipe) id: ObjectId): Promise<void> {
     await this.usersService.deleteUser(id);
   }
 }

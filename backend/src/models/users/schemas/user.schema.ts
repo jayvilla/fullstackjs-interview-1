@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Date, Document } from 'mongoose';
+import { Date, Document, ObjectId } from 'mongoose';
 import { IUser } from '../interfaces/user.interface';
 
 export type UserDocument = User & Document;
 
 @Schema({
+  id: true,
   timestamps: true,
   toJSON: {
     transform: (doc: UserDocument, ret) => {
@@ -15,7 +16,7 @@ export type UserDocument = User & Document;
   },
 })
 export class User implements IUser {
-  id: string;
+  id: ObjectId;
 
   @Prop({ required: true, trim: true })
   firstName: string;
