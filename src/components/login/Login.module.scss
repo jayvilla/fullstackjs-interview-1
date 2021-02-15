@@ -1,0 +1,11 @@
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  flex-direction: column;
+}
+
+.formControl {
+  margin: 15px auto;
+}
