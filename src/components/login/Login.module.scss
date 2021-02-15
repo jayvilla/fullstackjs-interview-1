@@ -2,10 +2,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 75vh;
   flex-direction: column;
 }
 
+.form {
+  width: 450px;
+}
+
+.inputGroup {
+  margin: 20px auto;
+}
+
 .formControl {
-  margin: 15px auto;
+  width: 100%;
+}
+
+.btnGroup {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
