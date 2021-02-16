@@ -7,6 +7,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 module.exports = withBundleAnalyzer({
-  serverRuntimeConfig: {},
+  serverRuntimeConfig: {
+    BASE_API_URL: `http://nestjs:3000`,
+  },
   publicRuntimeConfig: {},
 });

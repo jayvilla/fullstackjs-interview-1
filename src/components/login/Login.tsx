@@ -21,9 +21,9 @@ export const Login = () => {
     router.push('/sign-up');
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e?: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
+    e?.preventDefault();
     console.log('values', formValues);
-    return;
     const res = await fetch(`/api/authenticate`, {
       method: 'POST',
       headers: {
