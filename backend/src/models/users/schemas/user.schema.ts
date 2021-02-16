@@ -12,6 +12,7 @@ export type UserDocument = User & Document;
       delete ret.__v;
       ret.id = ret._id;
       delete ret._id;
+      delete ret.password;
     },
   },
 })
@@ -26,6 +27,9 @@ export class User implements IUser {
 
   @Prop({ required: true, unique: true, lowercase: true, index: true, trim: true })
   email: string;
+
+  @Prop({ required: true })
+  password: string;
 
   @Prop({ required: true, unique: true, trim: true })
   phoneNumber: string;

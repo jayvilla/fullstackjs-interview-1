@@ -3,11 +3,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './models/users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://api_user:api1234@mongo:27017/interview-nestjs'),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

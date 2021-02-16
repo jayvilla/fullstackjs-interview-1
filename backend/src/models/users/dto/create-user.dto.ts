@@ -16,6 +16,10 @@ export class CreateUserDto implements Partial<IUser> {
   email: string;
 
   @ApiProperty()
+  @IsNotEmpty()
+  password: string;
+
+  @ApiProperty()
   @IsPhoneNumber()
   phoneNumber: string;
 }
