@@ -4,9 +4,17 @@ import { InferGetServerSidePropsType } from 'next';
 import React from 'react';
 
 export const getServerSideProps = withSession(async ({ req, res }) => {
-  const user = req.session.get('user');
-
-  if (!user) {
+  let user;
+  try {
+    const token = req.session.get('jwt_token');
+    const parts = token.split('.');
+    const payload = Buffer.from(parts[1], 'base64').toString('utf-8');
+    ({ user } = JSON.parse(payload));
+    if (!user) {
+      throw new Error(`Error parsing user from (payload: ${payload})`);
+    }
+  } catch (e) {
+    console.log(e);
     res.writeHead(307, { Location: '/login' });
     res.end();
     return {
@@ -28,6 +36,7 @@ const DashboardPage = (props: InferGetServerSidePropsType<typeof getServerSidePr
   return (
     <div>
       <h1>Dashboard</h1>
+      <p>Hi {props.user?.firstName}, congratulations on making it this far! </p>
       <Dashboard />
     </div>
   );

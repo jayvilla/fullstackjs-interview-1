@@ -1,10 +1,10 @@
 import withSession from '@src/lib/withSession';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiResponse } from 'next';
 import getConfig from 'next/config';
 
 const { BASE_API_URL } = getConfig().serverRuntimeConfig;
 
-export default withSession(async (req: NextApiRequest, res: NextApiResponse) => {
+export default withSession(async (req, res: NextApiResponse) => {
   try {
     if (req.method !== 'POST') {
       res.status(405).end();
@@ -12,17 +12,21 @@ export default withSession(async (req: NextApiRequest, res: NextApiResponse) => 
 
     const { email, password } = req.body;
 
-    const response = await fetch(BASE_API_URL + '/users');
+    const response = await fetch(BASE_API_URL + '/auth/login', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
     const json = await response.json();
-    console.log(json);
-
-    // Todo authenticate email/password
-    // if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-    //   req.session.set('user', { email });
-    //   await req.session.save();
-    //   console.log(req.session.get());
-    //   return res.status(201).send('');
-    // }
+    if (response.ok) {
+      // req.session.set('user', { email });
+      req.session.set('jwt_token', json.access_token);
+      await req.session.save();
+      console.log(req.session.get());
+      return res.status(201).send(json);
+    } else {
+      res.status(response.status).send(json);
+    }
   } catch (e) {
     console.log(e);
     res.status(401).send({ error: e.message });

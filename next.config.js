@@ -8,7 +8,7 @@ CONFIG_ENV !== 'test' && console.log('CONFIG_ENV', CONFIG_ENV);
  */
 let defaultConfig = {
   env: {
-    SECRET_COOKIE_PASSWORD: 'SECRET_COOKIE_PASSWORD',
+    SECRET_COOKIE_PASSWORD: 'MXsFaEe5YO76opTRTuMcDHzMy5H7d68TS0V2XLeQKKv8bukHwZAkSv2nm0sY7s7t',
   },
   publicRuntimeConfig: {
     BUILD_VERSION: process.env.BUILD_VERSION,

@@ -3,7 +3,7 @@ version: '3.3'
 services:
   nextjs:
     environment:
-      SECRET_COOKIE_PASSWORD: 2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8
+      SECRET_COOKIE_PASSWORD: MXsFaEe5YO76opTRTuMcDHzMy5H7d68TS0V2XLeQKKv8bukHwZAkSv2nm0sY7s7t
     ports:
       - 4000:3000
     build:
