@@ -61,6 +61,7 @@ export const Login = () => {
                     <AccountCircle />
                   </InputAdornment>
                 }
+                data-cy='login-input-email'
               />
             </FormControl>
           </div>
@@ -78,6 +79,7 @@ export const Login = () => {
                     <Lock />
                   </InputAdornment>
                 }
+                data-cy='login-input-password'
               />
             </FormControl>
           </div>

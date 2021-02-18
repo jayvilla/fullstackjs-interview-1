@@ -36,6 +36,7 @@ module.exports = {
     '/public/',
     '/sass/',
     '/backend/',
+    '/cypress',
   ],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',

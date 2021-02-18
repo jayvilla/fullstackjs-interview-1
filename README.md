@@ -67,6 +67,16 @@ Now you should be able to access via http://localhost:4000
 
 **Todo**
 
+#### Full E2E Automation Testing
+
+For this project, Cypress isn't configured to run on docker, so you will need to install it on your local host machine's node_modules.
+
+If you haven't already, cd into your project folder and run
+
+```
+npm install
+```
+
 ## Todo
 
 - [ ] [integrate nextjs login with nestjs auth](https://github.com/vercel/next.js/tree/canary/examples/with-iron-session)

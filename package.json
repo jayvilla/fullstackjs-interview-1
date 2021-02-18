@@ -6,6 +6,7 @@
   "scripts": {
     "analyze": "ANALYZE=true npm run build",
     "build": "next build",
+    "cy": "npx cypress run --headed",
     "dev": "next -p 3000",
     "start": "docker-compose build && docker-compose up",
     "start:dev": "CONFIG_ENV=dev next start",
@@ -51,6 +52,7 @@
     "@types/jest": "^25.2.3",
     "babel-jest": "^26.1.0",
     "child-process-promise": "^2.2.1",
+    "cypress": "^6.5.0",
     "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
