@@ -168,6 +168,6 @@ For this project, Cypress isn't configured to run on docker, so you will need to
 
 If you haven't already, cd into your project folder and run
 
-```
+```bash
 npm install
 ```
