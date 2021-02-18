@@ -2,6 +2,7 @@
 .gitignore
 .next
 coverage
+cypress/videos
 backend
 docker
 node_modules
