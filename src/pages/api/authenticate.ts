@@ -22,7 +22,7 @@ export default withSession(async (req, res: NextApiResponse) => {
       // req.session.set('user', { email });
       req.session.set('jwt_token', json.access_token);
       await req.session.save();
-      console.log(req.session.get());
+      // console.log(req.session.get());
       return res.status(201).send(json);
     } else {
       res.status(response.status).send(json);

@@ -23,6 +23,16 @@ db.createUser({
 });
 db.createCollection('users');
 
+db.users.insertMany([
+  {
+    firstName: 'Test',
+    lastName: 'User',
+    email: 'test@sold.com',
+    password: 'test1234',
+    phoneNumber: '+16195555555',
+  },
+]);
+
 // db = db.getSiblingDB('api_test_db');
 // db.createUser(
 //   {

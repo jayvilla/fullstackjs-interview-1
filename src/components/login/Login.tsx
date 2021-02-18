@@ -8,6 +8,7 @@ import { FormValues } from './types';
 
 export const Login = () => {
   const router = useRouter();
+  const [error, setError] = React.useState<string>();
   const [formValues, setFormValues] = React.useState<FormValues>(DefaultFormValues);
 
   const handleChangeFormValues = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,14 +24,23 @@ export const Login = () => {
 
   const handleLogin = async (e?: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
     e?.preventDefault();
-    console.log('values', formValues);
-    const res = await fetch(`/api/authenticate`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(formValues),
-    });
+    setError(null);
+    try {
+      const response = await fetch(`/api/authenticate`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(formValues),
+      });
+      const json = await response.json();
+      if (!response.ok) {
+        throw new Error(JSON.stringify(json));
+      }
+      router.push('/dashboard');
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
   return (
@@ -79,6 +89,7 @@ export const Login = () => {
               Login
             </Button>
           </div>
+          <div>{error && <p style={{ color: 'red' }}>{error}</p>}</div>
         </form>
       </div>
     </div>
