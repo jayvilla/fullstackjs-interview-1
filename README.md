@@ -51,6 +51,8 @@ To get started, you will need to first install the following:
 
 Docker will let us run things in an isolated container environment.
 
+Next you'll want to fork this repository into your personal github account, and make your commits there.
+
 Install dependencies
 
 ```bash
@@ -146,7 +148,7 @@ It's okay if you are not well-versed in all 3 areas yet, just focus on what you'
 
 I'm fully aware that most candidates that I've reached out to, if any, will have experience with all of these tools and frameworks, so I'm not expecting anyone to be perfect.
 
-With that said, there is plenty of documentation that can be found online, and these frameworks are quite popular and at the forefront of modern javascript development, so you will encounter these sooner or later.
+With that said, there is plenty of documentation that can be found online, and these frameworks are quite popular and at the forefront of modern javascript development, so you will inevitably encounter these sooner or later.
 
 Also, this test is set up to be very practical and to demonstrate what a real project could look like on our team.
 
@@ -155,8 +157,10 @@ Without further ado, here are the specs ~
 ##### Requirements
 
 - Finish the sign up page (FE)
-  - You will want to create a react form that follows the [Users API](http://localhost:9001/api/users/#/) for creating a new user
-  - Validation is welcome
+  - You will want to create a react form that utilizes the [Users API](http://localhost:9001/api/users/#/) for creating a new user
+    - (Note: To access the api from the server side, you should use **nestjs:3000** as the base url)
+  - You are welcome to use material ui or build/style components from scratch if you want
+  - Form validation is essential
 - Update search users endpoint (BE)
   - Currently the search endpoint does a strict search
   - We want to be able to have a more flexible search (ie. case insensitive, partial emails, names, etc...)
@@ -171,3 +175,11 @@ If you haven't already, cd into your project folder and run
 ```bash
 npm install
 ```
+
+To run the automation tests
+
+```bash
+npm run cy
+```
+
+This will open up a cypress window and run the tests in an actual browser.
