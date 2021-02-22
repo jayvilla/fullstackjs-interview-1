@@ -1,4 +1,6 @@
+.DS_Store
 .next
 coverage
 node_modules
+cypress/screenshots
 cypress/videos
