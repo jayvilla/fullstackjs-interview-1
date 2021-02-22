@@ -53,7 +53,7 @@ Docker will let us run things in an isolated container environment.
 
 Next you'll want to fork this repository into your personal github account, and make your commits there.
 
-Install dependencies
+Install node dependencies
 
 ```bash
 npm install
