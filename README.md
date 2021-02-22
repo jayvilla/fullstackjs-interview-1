@@ -49,17 +49,11 @@ To get started, you will need to first install the following:
 - [Docker-Compose](https://docs.docker.com/compose/)
 - [NodeJS](https://nodejs.org/en/)
 
-Docker will let us run things in an isolated container environment.
+_Docker will let us run things in an isolated container environment._
 
 Next you'll want to fork this repository into your personal github account, and make your commits there.
 
-Install node dependencies
-
-```bash
-npm install
-```
-
-Start local server
+Build docker containers and start local servers
 
 ```bash
 npm start

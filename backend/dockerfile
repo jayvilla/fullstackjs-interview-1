@@ -10,5 +10,7 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY . /usr/src/app
+# RUN npm i -g @nestjs/cli
+# RUN NODE_ENV=development npm install
 RUN npm install
 CMD ["npm", "run", "start:dev"]
