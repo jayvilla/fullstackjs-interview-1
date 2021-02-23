@@ -51,7 +51,18 @@ To get started, you will need to first install the following:
 
 _Docker will let us run things in an isolated container environment._
 
-Next you'll want to fork this repository into your personal github account, and make your commits there.
+Next you'll want to clone this repository. (Make sure you push updates to a personal github account, and make your commits there).
+
+```bash
+git clone -o sold.com https://github.com/brothatru/fullstackjs-interview.git
+```
+
+Install all npm dependencies locally
+
+```bash
+cd fullstackjs-interview
+npm install && cd backend && npm install && cd ..
+```
 
 Build docker containers and start local servers
 
