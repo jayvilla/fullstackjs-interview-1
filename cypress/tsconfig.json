@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "module": "esnext",
     "lib": [
-      "es5",
+      "esnext",
       "dom"
     ],
     "types": [
       "cypress",
-      "jest"
+      "jest",
+      "node"
     ]
   },
   "include": [
