@@ -7,7 +7,7 @@ $primary-color: #3f51b5;
   padding: 10px 5px;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px 1px $primary-color;
+  box-shadow: 0 0px 15px 1px $primary-color;
 
   h1 {
     text-align: center;
@@ -53,6 +53,7 @@ $primary-color: #3f51b5;
     background-color: #ffffff;
     color: $primary-color;
     transition: 250ms all ease-in;
+    cursor: pointer;
 
     &:hover {
       border: 1px solid $primary-color;
