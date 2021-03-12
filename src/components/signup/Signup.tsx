@@ -49,7 +49,7 @@ export const Signup = () => {
         setFormMessage((prevState) => ({
           ...prevState,
           error: true,
-          message: `${user.message}. ${key}: ${value} already in use.`,
+          message: `${user.message} ${key}: ${value} already in use.`,
         }));
         return;
       }
@@ -75,7 +75,7 @@ export const Signup = () => {
         return;
       }
 
-      // router.push('/dashboard');
+      router.push('/dashboard');
     } catch (e) {
       console.log(e.message);
     }

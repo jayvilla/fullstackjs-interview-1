@@ -70,4 +70,26 @@ describe('Sign Up Spec', () => {
     cy.get('form').submit();
     cy.get('[data-cy="signup-error"]').should('contain.html', errorMessages.phoneNumber);
   });
+
+  it('should render dashboard on successful signup', () => {
+    cy.get('[data-cy="input-firstName"]').type('test');
+    cy.get('[data-cy="input-lastName"]').type('user');
+    cy.get('[data-cy="input-email"]').type('test@user.com');
+    cy.get('[data-cy="input-password"]').type('!Test1234');
+    cy.get('[data-cy="input-confirmPassword"]').type('!Test1234');
+    cy.get('[data-cy="input-phoneNumber"]').type('+15106721234');
+    cy.get('form').submit();
+    cy.location('pathname').should('eq', '/dashboard');
+  });
+
+  it('should render user already exists if duplicate user', () => {
+    cy.get('[data-cy="input-firstName"]').type('test');
+    cy.get('[data-cy="input-lastName"]').type('user');
+    cy.get('[data-cy="input-email"]').type('test@user.com');
+    cy.get('[data-cy="input-password"]').type('!Test1234');
+    cy.get('[data-cy="input-confirmPassword"]').type('!Test1234');
+    cy.get('[data-cy="input-phoneNumber"]').type('+15106721234');
+    cy.get('form').submit();
+    cy.get('[data-cy="form-message"]').should('contain.html', 'User already exists');
+  });
 });
