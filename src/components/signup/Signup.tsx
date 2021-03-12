@@ -9,10 +9,10 @@ import {
   defaultSignUpFormValues,
   errorMessages,
 } from './constants';
-import { AuthAPI, UserAPI } from './lib';
+import { AuthAPI, UserAPI } from './lib/lib';
 import styles from './Signup.module.scss';
 import { FormMessage, SignUpFormErrors, SignUpFormValues, User } from './types';
-import { VALIDATION_REGEX } from './utils';
+import { VALIDATION_REGEX } from './utils/utils';
 
 export const Signup = () => {
   const router = useRouter();
@@ -94,8 +94,6 @@ export const Signup = () => {
     const passwordValid = formValues.password.match(VALIDATION_REGEX['password'])
       ? true
       : false;
-    console.log(formValues.password);
-    console.log(formValues.confirmPassword);
     const confirmPasswordValid =
       formValues.password === formValues.confirmPassword ? true : false;
     const phoneNumberValid = formValues.phoneNumber.match(VALIDATION_REGEX['phoneNumber'])
@@ -130,12 +128,12 @@ export const Signup = () => {
       },
     }));
 
-    console.log('firstName valid: ', firstNameValid);
-    console.log('lastName valid: ', lastNameValid);
-    console.log('email valid: ', emailValid);
-    console.log('password valid: ', passwordValid);
-    console.log('confirmPassword valid: ', confirmPasswordValid);
-    console.log('phoneNumber valid: ', firstNameValid);
+    // console.log('firstName valid: ', firstNameValid);
+    // console.log('lastName valid: ', lastNameValid);
+    // console.log('email valid: ', emailValid);
+    // console.log('password valid: ', passwordValid);
+    // console.log('confirmPassword valid: ', confirmPasswordValid);
+    // console.log('phoneNumber valid: ', firstNameValid);
 
     return (
       firstNameValid &&

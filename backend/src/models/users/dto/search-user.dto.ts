@@ -1,8 +1,7 @@
-import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber } from 'class-validator';
-import { CreateUserDto } from './create-user.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
-export class SearchUserDto extends PartialType(OmitType(CreateUserDto, ['password'])) {
+export class SearchUserDto {
   @ApiProperty()
   @IsOptional()
   @IsNotEmpty()
@@ -10,16 +9,15 @@ export class SearchUserDto extends PartialType(OmitType(CreateUserDto, ['passwor
 
   @ApiProperty()
   @IsOptional()
-  @IsNotEmpty()
   lastName: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsEmail()
+  // @IsEmail() - re-enable to only accept emails (less flexible)
   email: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsPhoneNumber()
+  // @IsPhoneNumber() - re-enable to only accept phone numbers (less flexible)
   phoneNumber: string;
 }

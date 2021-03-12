@@ -1,5 +1,5 @@
 import fetch, { Response } from 'node-fetch';
-import { LoginParams, SignUpFormValues } from './types';
+import { LoginParams, SignUpFormValues } from '../types';
 
 export const UserAPI = {
   createUser: async (formValues: SignUpFormValues): Promise<Response> => {
