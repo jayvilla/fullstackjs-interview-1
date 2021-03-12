@@ -44,8 +44,6 @@ export const Signup = () => {
       const response = await UserAPI.createUser(formValues);
       const user = await response.json();
       if (!response.ok) {
-        console.log(response);
-        console.log(user);
         const key = Object.keys(user.keyValue)[0];
         const value = user.keyValue[key];
         setFormMessage((prevState) => ({
@@ -156,7 +154,6 @@ export const Signup = () => {
               <input
                 name='firstName'
                 type='text'
-                // placeholder='First name'
                 value={formValues.firstName}
                 onChange={handleFormChange('firstName')}
                 className={styles.formControl}
@@ -173,7 +170,6 @@ export const Signup = () => {
               <input
                 name='lastName'
                 type='text'
-                // placeholder='Last name'
                 value={formValues.lastName}
                 onChange={handleFormChange('lastName')}
                 className={styles.formControl}
@@ -190,7 +186,6 @@ export const Signup = () => {
               <input
                 name='email'
                 type='text'
-                // placeholder='Email'
                 value={formValues.email}
                 onChange={handleFormChange('email')}
                 className={styles.formControl}
@@ -207,7 +202,6 @@ export const Signup = () => {
               <input
                 name='password'
                 type='password'
-                // placeholder='Password'
                 value={formValues.password}
                 onChange={handleFormChange('password')}
                 className={styles.formControl}
@@ -224,7 +218,6 @@ export const Signup = () => {
               <input
                 name='confirmPassword'
                 type='password'
-                // placeholder='Confirm Password'
                 value={formValues.confirmPassword}
                 onChange={handleFormChange('confirmPassword')}
                 className={styles.formControl}
@@ -241,7 +234,6 @@ export const Signup = () => {
               <input
                 name='phoneNumber'
                 type='text'
-                // placeholder='Phone Number'
                 value={formValues.phoneNumber}
                 onChange={handleFormChange('phoneNumber')}
                 className={styles.formControl}
