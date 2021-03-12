@@ -11,7 +11,7 @@
     "start": "docker-compose build && docker-compose up",
     "start:dev": "CONFIG_ENV=dev next start",
     "start:prod": "CONFIG_ENV=prod next start",
-    "test": "CONFIG_ENV=test jest -c config/jest/jest.config.js --coverage --verbose"
+    "test": "set CONFIG_ENV=test jest -c config/jest/jest.config.js --coverage --verbose"
   },
   "repository": {
     "type": "git",

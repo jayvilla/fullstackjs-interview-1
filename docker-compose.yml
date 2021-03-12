@@ -9,7 +9,7 @@ services:
     ports:
       - 4000:3000
     build:
-      context: .
+      context: ./
       dockerfile: ./docker/local.dockerfile
     volumes:
       - ./:/usr/src/app
