@@ -1,4 +1,4 @@
-import { ErrorMessages, SignUpFormErrors, SignUpFormValues } from './types';
+import { ErrorMessages, FormMessage, SignUpFormErrors, SignUpFormValues } from './types';
 
 export const defaultSignUpFormValues: SignUpFormValues = {
   firstName: '',
@@ -43,4 +43,9 @@ export const errorMessages: ErrorMessages = {
   password: 'Must be at least 8 characters. 1 Upper. 1 Lower. 1 Special.',
   confirmPassword: 'Passwords do not match.',
   phoneNumber: 'Please enter valid phone number (e.g. +12223334444)',
+};
+
+export const defaultFormMessage: FormMessage = {
+  error: false,
+  message: '',
 };

@@ -1,10 +1,15 @@
 import { Error } from '@src/components/signup/common/error';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { defaultSignUpFormErrors, defaultSignUpFormValues, errorMessages } from './constants';
+import {
+  defaultFormMessage,
+  defaultSignUpFormErrors,
+  defaultSignUpFormValues,
+  errorMessages,
+} from './constants';
 import { AuthAPI, UserAPI } from './lib';
 import styles from './Signup.module.scss';
-import { SignUpFormErrors, SignUpFormValues, User } from './types';
+import { FormMessage, SignUpFormErrors, SignUpFormValues, User } from './types';
 import { VALIDATION_REGEX } from './utils';
 
 export const Signup = () => {
@@ -17,6 +22,8 @@ export const Signup = () => {
   const [formErrors, setFormErrors] = React.useState<SignUpFormErrors>(
     defaultSignUpFormErrors,
   );
+
+  const [formMessage, setFormMessage] = React.useState<FormMessage>(defaultFormMessage);
 
   const handleFormChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
@@ -35,13 +42,26 @@ export const Signup = () => {
       const response = await UserAPI.createUser(formValues);
       const user = await response.json();
       if (!response.ok) {
-        console.log(user.message);
+        console.log(response);
+        console.log(user);
+        const key = Object.keys(user.keyValue)[0];
+        const value = user.keyValue[key];
+        setFormMessage((prevState) => ({
+          ...prevState,
+          error: true,
+          message: `${user.message}. ${key}: ${value} already in use.`,
+        }));
         return;
       }
-      login(user);
       setFormValues(defaultSignUpFormValues);
+      setFormMessage((prevState) => ({
+        ...prevState,
+        error: false,
+        message: 'User successfully created.',
+      }));
+      login(user);
     } catch (e) {
-      console.log('blahhh', e);
+      console.log(e);
     }
   };
 
@@ -55,7 +75,7 @@ export const Signup = () => {
         return;
       }
 
-      router.push('/dashboard');
+      // router.push('/dashboard');
     } catch (e) {
       console.log(e.message);
     }
@@ -72,7 +92,10 @@ export const Signup = () => {
     const passwordValid = formValues.password.match(VALIDATION_REGEX['password'])
       ? true
       : false;
-    const confirmPasswordValid = formValues.password === formValues.confirmPassword;
+    console.log(formValues.password);
+    console.log(formValues.confirmPassword);
+    const confirmPasswordValid =
+      formValues.password === formValues.confirmPassword ? true : false;
     const phoneNumberValid = formValues.phoneNumber.match(VALIDATION_REGEX['phoneNumber'])
       ? true
       : false;
@@ -219,6 +242,18 @@ export const Signup = () => {
         <div className={styles.formGroup}>
           <input type='submit' className={styles.formControl} />
         </div>
+
+        {formMessage.message && (
+          <div
+            className={[
+              styles.formMessage,
+              formMessage.error ? styles.error : styles.success,
+            ].join(' ')}
+            data-cy='form-message'
+          >
+            {formMessage.message}
+          </div>
+        )}
       </form>
     </div>
   );

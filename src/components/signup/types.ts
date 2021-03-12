@@ -44,3 +44,8 @@ export type LoginParams = {
   email: string;
   password: string;
 };
+
+export type FormMessage = {
+  error: boolean;
+  message: string;
+};

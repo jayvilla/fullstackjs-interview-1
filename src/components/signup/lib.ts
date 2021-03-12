@@ -6,9 +6,14 @@ export const UserAPI = {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    delete formValues.confirmPassword;
+    const body = JSON.stringify({
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      email: formValues.email,
+      password: formValues.password,
+      phoneNumber: formValues.phoneNumber,
+    });
 
-    const body = JSON.stringify(formValues);
     const requestOptions = {
       method: 'POST',
       headers,
