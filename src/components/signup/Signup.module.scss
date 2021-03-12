@@ -1,3 +1,5 @@
+$primary-color: #3f51b5;
+
 .container {
   width: 375px;
   height: 475px;
@@ -5,7 +7,7 @@
   padding: 10px 5px;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, 0.2);
+  box-shadow: 5px 5px 5px 1px $primary-color;
 
   h1 {
     text-align: center;
@@ -30,7 +32,7 @@
 
     &:focus {
       outline: none;
-      border-bottom: 2px solid rgba(0, 0, 255, 0.2);
+      border-bottom: 2px solid $primary-color;
     }
 
     &::placeholder {
@@ -39,14 +41,14 @@
   }
 
   .formControl[type='submit'] {
-    background-color: rgba(0, 0, 255, 0.2);
+    background-color: $primary-color;
     border: none;
     border-radius: 10px;
+    color: #ffffff;
     transition: 250ms background-color ease-in;
 
     &:hover {
       background-color: rgb(0, 73, 24);
-      color: #ffffff;
     }
   }
 }
