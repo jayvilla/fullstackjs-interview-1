@@ -22,14 +22,19 @@ $primary-color: #3f51b5;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 0px 10px 1px #000000;
-  min-width: 625px;
+  width: 625px;
+  overflow: hidden;
 
   @media (max-width: $xs-max-width) {
-    min-width: 325px;
+    width: 325px;
+  }
+
+  .block {
+    background-color: $primary-color;
   }
 
   .formContainer {
-    padding: 5px 0;
+    padding: 5px;
   }
 
   h1 {
@@ -39,9 +44,28 @@ $primary-color: #3f51b5;
   }
 
   .formGroup {
+    position: relative;
     height: 30px;
     width: 275px;
-    margin: 20px auto;
+    margin: 25px auto;
+
+    label {
+      position: absolute;
+      top: 8px;
+      left: 0;
+      color: #999999;
+      transition: 0.5s all ease;
+      pointer-events: none;
+      font-size: 12px;
+    }
+
+    input:focus ~ label,
+    input:not(:focus):valid ~ label {
+      top: -12px;
+      left: 0;
+      color: $primary-color;
+      font-weight: bold;
+    }
   }
 
   .formControl {
@@ -78,7 +102,7 @@ $primary-color: #3f51b5;
     width: 275px;
     margin: 10px auto;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid $primary-color;
     background-color: #ffffff;
     color: $primary-color;
@@ -114,3 +138,20 @@ $primary-color: #3f51b5;
     letter-spacing: 1.2px;
   }
 }
+
+// .formGroup label {
+//   position: absolute;
+//   top: 10px;
+//   left: 0;
+//   color: #999;
+//   transition: 0.5s;
+//   pointer-events: none;
+// }
+
+// .formGroup input:focus ~ label {
+//   top: -12px;
+//   left: 0;
+//   color: $primary-color;
+//   font-size: 12px;
+//   font-weight: bold;
+// }
