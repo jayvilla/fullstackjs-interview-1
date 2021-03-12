@@ -23,7 +23,11 @@ export const Signup = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validateForm();
+    const validForm = validateForm();
+
+    console.log('valid form: ', validForm);
+
+    if (!validForm) return;
   };
 
   const validateForm = () => {
@@ -42,12 +46,6 @@ export const Signup = () => {
       ? true
       : false;
 
-    console.log('firstName valid: ', firstNameValid);
-    console.log('lastName valid: ', lastNameValid);
-    console.log('email valid: ', emailValid);
-    console.log('password valid: ', passwordValid);
-    console.log('confirmPassword valid: ', confirmPasswordValid);
-    console.log('phoneNumber valid: ', firstNameValid);
     setFormErrors((prevState) => ({
       ...prevState,
       firstName: {
@@ -75,6 +73,22 @@ export const Signup = () => {
         message: !phoneNumberValid ? errorMessages.phoneNumber : '',
       },
     }));
+
+    console.log('firstName valid: ', firstNameValid);
+    console.log('lastName valid: ', lastNameValid);
+    console.log('email valid: ', emailValid);
+    console.log('password valid: ', passwordValid);
+    console.log('confirmPassword valid: ', confirmPasswordValid);
+    console.log('phoneNumber valid: ', firstNameValid);
+
+    return (
+      firstNameValid &&
+      lastNameValid &&
+      emailValid &&
+      passwordValid &&
+      confirmPasswordValid &&
+      phoneNumberValid
+    );
   };
 
   return (

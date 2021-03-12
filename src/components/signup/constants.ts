@@ -40,7 +40,7 @@ export const errorMessages: ErrorMessages = {
   firstName: 'First name cannot be blank.',
   lastName: 'Last name cannot be blank.',
   email: 'Please enter valid email address (e.g. bob@builder.com)',
-  password: 'Must be 8 Chars. 1 Upper. 1 Lower. 1 Special.',
+  password: 'Must be at least 8 characters. 1 Upper. 1 Lower. 1 Special.',
   confirmPassword: 'Passwords do not match.',
   phoneNumber: 'Please enter valid phone number (e.g. +12223334444)',
 };
