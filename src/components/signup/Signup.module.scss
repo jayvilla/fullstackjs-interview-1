@@ -28,7 +28,13 @@ $primary-color: #3f51b5;
     border-left: none;
     border-right: none;
     border-top: none;
+    border-bottom: 1px solid #000000;
     transition: 250ms border ease-in;
+
+    &:hover {
+      outline: none;
+      border-bottom: 2px solid #000000;
+    }
 
     &:focus {
       outline: none;
@@ -41,14 +47,17 @@ $primary-color: #3f51b5;
   }
 
   .formControl[type='submit'] {
-    background-color: $primary-color;
     border: none;
     border-radius: 10px;
-    color: #ffffff;
-    transition: 250ms background-color ease-in;
+    border: 1px solid $primary-color;
+    background-color: #ffffff;
+    color: $primary-color;
+    transition: 250ms all ease-in;
 
     &:hover {
-      background-color: rgb(0, 73, 24);
+      border: 1px solid $primary-color;
+      background-color: $primary-color;
+      color: #ffffff;
     }
   }
 }
