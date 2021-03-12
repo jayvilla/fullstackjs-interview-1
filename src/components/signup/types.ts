@@ -29,3 +29,18 @@ export type ErrorMessages = {
   confirmPassword: string;
   phoneNumber: string;
 };
+
+export type User = {
+  createdAt: string;
+  email: string;
+  id: string;
+  lastName: string;
+  password: string;
+  phoneNumber: string;
+  updatedAt: string;
+};
+
+export type LoginParams = {
+  email: string;
+  password: string;
+};

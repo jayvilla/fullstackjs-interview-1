@@ -1,12 +1,15 @@
 import { Error } from '@src/components/signup/common/error';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { defaultSignUpFormErrors, defaultSignUpFormValues, errorMessages } from './constants';
-import { UserAPI } from './lib';
+import { AuthAPI, UserAPI } from './lib';
 import styles from './Signup.module.scss';
-import { SignUpFormErrors, SignUpFormValues } from './types';
+import { SignUpFormErrors, SignUpFormValues, User } from './types';
 import { VALIDATION_REGEX } from './utils';
 
 export const Signup = () => {
+  const router = useRouter();
+
   const [formValues, setFormValues] = React.useState<SignUpFormValues>(
     defaultSignUpFormValues,
   );
@@ -28,9 +31,29 @@ export const Signup = () => {
 
     if (!validForm) return;
 
-    const response = await UserAPI.createUser(formValues);
-    const json = await response.json();
-    console.log(json);
+    try {
+      const response = await UserAPI.createUser(formValues);
+      const user = await response.json();
+      login(user);
+    } catch (e) {
+      console.log('blahhh', e);
+    }
+  };
+
+  const login = async (user: User) => {
+    try {
+      const response = await AuthAPI.login({ email: user.email, password: user.password });
+      const json = await response.json();
+
+      if (!response.ok) {
+        console.log(json.message);
+        return;
+      }
+
+      router.push('/dashboard');
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   const validateForm = () => {
