@@ -1,6 +1,6 @@
 .container {
   width: 375px;
-  height: 450px;
+  height: 475px;
   margin: 100px auto 0 auto;
   padding: 10px 5px;
   background-color: #ffffff;
@@ -14,13 +14,15 @@
 
   .formGroup {
     height: 30px;
-    width: 250px;
-    margin: 10px auto;
+    width: 275px;
+    margin: 20px auto;
   }
 
   .formControl {
     height: 100%;
     width: 100%;
+    font-size: 18px;
+    letter-spacing: 1.2px;
     border-left: none;
     border-right: none;
     border-top: none;
@@ -33,7 +35,6 @@
 
     &::placeholder {
       font-size: 12px;
-      letter-spacing: 1.2px;
     }
   }
 
