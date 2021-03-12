@@ -1,16 +1,39 @@
+/** 
+@info react-grid-system breakpoints
+xs: 0 - 575px
+sm: 576px - 767px
+md: 768px - 991px
+lg: 992px - 1199px
+xl: 1200px - 1599px
+xxl: 1600px+
+*/
+$xs-max-width: 575px;
+$sm-min-width: 576px;
+$sm-max-width: 767px;
+$md-min-width: 768px;
+$md-max-width: 991px;
+$lg-min-width: 992px;
+
 $primary-color: #3f51b5;
 
 .container {
   position: relative;
-  width: 375px;
-  height: 525px;
   margin: 100px auto 0 auto;
-  padding: 10px 5px;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 0px 15px 1px $primary-color;
+  box-shadow: 0 0px 10px 1px #000000;
+  min-width: 625px;
+
+  @media (max-width: $xs-max-width) {
+    min-width: 325px;
+  }
+
+  .formContainer {
+    padding: 5px 0;
+  }
 
   h1 {
+    color: $primary-color;
     text-align: center;
     letter-spacing: 2px;
   }
@@ -24,7 +47,7 @@ $primary-color: #3f51b5;
   .formControl {
     height: 100%;
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 1.2px;
     padding: 2px;
     border-left: none;
@@ -44,11 +67,13 @@ $primary-color: #3f51b5;
     }
 
     &::placeholder {
+      color: lightgray;
       font-size: 12px;
     }
   }
 
   button[type='submit'] {
+    font-weight: bold;
     height: 30px;
     width: 275px;
     margin: 10px auto;
@@ -86,5 +111,6 @@ $primary-color: #3f51b5;
   .signIn {
     text-align: center;
     font-size: 10px;
+    letter-spacing: 1.2px;
   }
 }

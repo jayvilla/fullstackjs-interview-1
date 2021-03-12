@@ -2,6 +2,7 @@ import { Error } from '@src/components/signup/common/error';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Col, Container, Row } from 'react-grid-system';
 import {
   defaultFormMessage,
   defaultSignUpFormErrors,
@@ -147,126 +148,131 @@ export const Signup = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Create Account</h1>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.formGroup}>
-          <input
-            name='firstName'
-            type='text'
-            placeholder='First name'
-            value={formValues.firstName}
-            onChange={handleFormChange('firstName')}
-            className={styles.formControl}
-            data-cy='input-firstName'
-          />
-          {formErrors.firstName.error && formErrors.firstName.message && (
-            <Error message={formErrors.firstName.message} />
-          )}
-        </div>
-
-        <div className={styles.formGroup}>
-          <input
-            name='lastName'
-            type='text'
-            placeholder='Last name'
-            value={formValues.lastName}
-            onChange={handleFormChange('lastName')}
-            className={styles.formControl}
-            data-cy='input-lastName'
-          />
-          {formErrors.lastName.error && formErrors.lastName.message && (
-            <Error message={formErrors.lastName.message} />
-          )}
-        </div>
-
-        <div className={styles.formGroup}>
-          <input
-            name='email'
-            type='text'
-            placeholder='Email'
-            value={formValues.email}
-            onChange={handleFormChange('email')}
-            className={styles.formControl}
-            data-cy='input-email'
-          />
-          {formErrors.email.error && formErrors.email.message && (
-            <Error message={formErrors.email.message} />
-          )}
-        </div>
-
-        <div className={styles.formGroup}>
-          <input
-            name='password'
-            type='password'
-            placeholder='Password'
-            value={formValues.password}
-            onChange={handleFormChange('password')}
-            className={styles.formControl}
-            data-cy='input-password'
-          />
-          {formErrors.password.error && formErrors.password.message && (
-            <Error message={formErrors.password.message} />
-          )}
-        </div>
-
-        <div className={styles.formGroup}>
-          <input
-            name='confirmPassword'
-            type='password'
-            placeholder='Confirm Password'
-            value={formValues.confirmPassword}
-            onChange={handleFormChange('confirmPassword')}
-            className={styles.formControl}
-            data-cy='input-confirmPassword'
-          />
-          {formErrors.confirmPassword.error && formErrors.confirmPassword.message && (
-            <Error message={formErrors.confirmPassword.message} />
-          )}
-        </div>
-
-        <div className={styles.formGroup}>
-          <input
-            name='phoneNumber'
-            type='text'
-            placeholder='Phone Number'
-            value={formValues.phoneNumber}
-            onChange={handleFormChange('phoneNumber')}
-            className={styles.formControl}
-            data-cy='input-phoneNumber'
-          />
-          {formErrors.phoneNumber.error && formErrors.phoneNumber.message && (
-            <Error message={formErrors.phoneNumber.message} />
-          )}
-        </div>
-
-        <div className={styles.formGroup}>
-          <button type='submit'>Sign Up</button>
-        </div>
-
-        <div className={styles.formGroup}>
-          {formMessage.message && (
-            <div
-              className={[
-                styles.formMessage,
-                formMessage.error ? styles.error : styles.success,
-              ].join(' ')}
-              data-cy='form-message'
-            >
-              {formMessage.message}
+    <Container className={styles.container}>
+      <Row>
+        <Col xs={0} sm={4}></Col>
+        <Col xs={12} sm={8} className={styles.formContainer}>
+          <h1>Create Account</h1>
+          <form onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+              <input
+                name='firstName'
+                type='text'
+                placeholder='First name'
+                value={formValues.firstName}
+                onChange={handleFormChange('firstName')}
+                className={styles.formControl}
+                data-cy='input-firstName'
+              />
+              {formErrors.firstName.error && formErrors.firstName.message && (
+                <Error message={formErrors.firstName.message} />
+              )}
             </div>
-          )}
-        </div>
 
-        <div className={[styles.formGroup, styles.signIn].join(' ')}>
-          <p>
-            Already have an account?{'  '}
-            <span>
-              <Link href='/login'>Sign in</Link>
-            </span>
-          </p>
-        </div>
-      </form>
-    </div>
+            <div className={styles.formGroup}>
+              <input
+                name='lastName'
+                type='text'
+                placeholder='Last name'
+                value={formValues.lastName}
+                onChange={handleFormChange('lastName')}
+                className={styles.formControl}
+                data-cy='input-lastName'
+              />
+              {formErrors.lastName.error && formErrors.lastName.message && (
+                <Error message={formErrors.lastName.message} />
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <input
+                name='email'
+                type='text'
+                placeholder='Email'
+                value={formValues.email}
+                onChange={handleFormChange('email')}
+                className={styles.formControl}
+                data-cy='input-email'
+              />
+              {formErrors.email.error && formErrors.email.message && (
+                <Error message={formErrors.email.message} />
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <input
+                name='password'
+                type='password'
+                placeholder='Password'
+                value={formValues.password}
+                onChange={handleFormChange('password')}
+                className={styles.formControl}
+                data-cy='input-password'
+              />
+              {formErrors.password.error && formErrors.password.message && (
+                <Error message={formErrors.password.message} />
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <input
+                name='confirmPassword'
+                type='password'
+                placeholder='Confirm Password'
+                value={formValues.confirmPassword}
+                onChange={handleFormChange('confirmPassword')}
+                className={styles.formControl}
+                data-cy='input-confirmPassword'
+              />
+              {formErrors.confirmPassword.error && formErrors.confirmPassword.message && (
+                <Error message={formErrors.confirmPassword.message} />
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <input
+                name='phoneNumber'
+                type='text'
+                placeholder='Phone Number'
+                value={formValues.phoneNumber}
+                onChange={handleFormChange('phoneNumber')}
+                className={styles.formControl}
+                data-cy='input-phoneNumber'
+              />
+              {formErrors.phoneNumber.error && formErrors.phoneNumber.message && (
+                <Error message={formErrors.phoneNumber.message} />
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <button type='submit'>Sign Up</button>
+            </div>
+
+            <div className={styles.formGroup}>
+              {formMessage.message && (
+                <div
+                  className={[
+                    styles.formMessage,
+                    formMessage.error ? styles.error : styles.success,
+                  ].join(' ')}
+                  data-cy='form-message'
+                >
+                  {formMessage.message}
+                </div>
+              )}
+            </div>
+
+            <div className={[styles.formGroup, styles.signIn].join(' ')}>
+              <p>
+                Already have an account?{'  '}
+                <span>
+                  <Link href='/login'>Sign in</Link>
+                </span>
+              </p>
+            </div>
+          </form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
