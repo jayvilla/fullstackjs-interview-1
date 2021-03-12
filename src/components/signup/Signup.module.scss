@@ -1,6 +1,7 @@
 $primary-color: #3f51b5;
 
 .container {
+  position: relative;
   width: 375px;
   height: 525px;
   margin: 100px auto 0 auto;
@@ -25,20 +26,21 @@ $primary-color: #3f51b5;
     width: 100%;
     font-size: 18px;
     letter-spacing: 1.2px;
+    padding: 2px;
     border-left: none;
     border-right: none;
     border-top: none;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1.5px solid #000000;
     transition: 250ms border ease-in;
 
     &:hover {
       outline: none;
-      border-bottom: 2px solid #000000;
+      border-bottom: 1.5px solid #000000;
     }
 
     &:focus {
       outline: none;
-      border-bottom: 2px solid $primary-color;
+      border-bottom: 1.5px solid $primary-color;
     }
 
     &::placeholder {
@@ -46,7 +48,10 @@ $primary-color: #3f51b5;
     }
   }
 
-  .formControl[type='submit'] {
+  button[type='submit'] {
+    height: 30px;
+    width: 275px;
+    margin: 10px auto;
     border: none;
     border-radius: 10px;
     border: 1px solid $primary-color;
@@ -54,11 +59,13 @@ $primary-color: #3f51b5;
     color: $primary-color;
     transition: 250ms all ease-in;
     cursor: pointer;
+    outline: none;
 
     &:hover {
       border: 1px solid $primary-color;
       background-color: $primary-color;
       color: #ffffff;
+      outline: none;
     }
   }
 
@@ -74,5 +81,10 @@ $primary-color: #3f51b5;
 
   .formMessage.success {
     color: green;
+  }
+
+  .signIn {
+    text-align: center;
+    font-size: 10px;
   }
 }

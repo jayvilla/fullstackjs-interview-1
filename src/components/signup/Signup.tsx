@@ -1,4 +1,5 @@
 import { Error } from '@src/components/signup/common/error';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import {
@@ -147,7 +148,7 @@ export const Signup = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Sign Up</h1>
+      <h1>Create Account</h1>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <input
@@ -240,20 +241,31 @@ export const Signup = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <input type='submit' className={styles.formControl} />
+          <button type='submit'>Sign Up</button>
         </div>
 
-        {formMessage.message && (
-          <div
-            className={[
-              styles.formMessage,
-              formMessage.error ? styles.error : styles.success,
-            ].join(' ')}
-            data-cy='form-message'
-          >
-            {formMessage.message}
-          </div>
-        )}
+        <div className={styles.formGroup}>
+          {formMessage.message && (
+            <div
+              className={[
+                styles.formMessage,
+                formMessage.error ? styles.error : styles.success,
+              ].join(' ')}
+              data-cy='form-message'
+            >
+              {formMessage.message}
+            </div>
+          )}
+        </div>
+
+        <div className={[styles.formGroup, styles.signIn].join(' ')}>
+          <p>
+            Already have an account?{'  '}
+            <span>
+              <Link href='/login'>Sign in</Link>
+            </span>
+          </p>
+        </div>
       </form>
     </div>
   );
