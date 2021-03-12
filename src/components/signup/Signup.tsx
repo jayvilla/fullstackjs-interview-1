@@ -1,6 +1,7 @@
 import { Error } from '@src/components/signup/common/error';
 import React from 'react';
 import { defaultSignUpFormErrors, defaultSignUpFormValues, errorMessages } from './constants';
+import { UserAPI } from './lib';
 import styles from './Signup.module.scss';
 import { SignUpFormErrors, SignUpFormValues } from './types';
 import { VALIDATION_REGEX } from './utils';
@@ -21,13 +22,15 @@ export const Signup = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validForm = validateForm();
 
-    console.log('valid form: ', validForm);
-
     if (!validForm) return;
+
+    const response = await UserAPI.createUser(formValues);
+    const json = await response.json();
+    console.log(json);
   };
 
   const validateForm = () => {
