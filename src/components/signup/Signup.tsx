@@ -34,7 +34,12 @@ export const Signup = () => {
     try {
       const response = await UserAPI.createUser(formValues);
       const user = await response.json();
+      if (!response.ok) {
+        console.log(user.message);
+        return;
+      }
       login(user);
+      setFormValues(defaultSignUpFormValues);
     } catch (e) {
       console.log('blahhh', e);
     }
