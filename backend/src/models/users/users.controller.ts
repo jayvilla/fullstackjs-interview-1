@@ -44,6 +44,7 @@ export class UsersController {
   @ApiOperation({ summary: `Search for users that match specific criteria` })
   @Post('search')
   async search(@Body() searchUserDto: SearchUserDto): Promise<User[]> {
+    console.log(searchUserDto);
     return await this.usersService.search(searchUserDto);
   }
 

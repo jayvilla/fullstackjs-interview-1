@@ -53,7 +53,17 @@ export class UsersService {
   }
 
   async search(searchUserDto: SearchUserDto): Promise<User[]> {
-    const res = await this.userModel.find(searchUserDto).exec();
-    return res.map((r) => r.toJSON());
+    // const res = await this.userModel.find(searchUserDto).exec();
+    // return res.map((r) => r.toJSON());
+    const options = [
+      { firstName: new RegExp(searchUserDto.firstName, 'i') },
+      { lastName: new RegExp(searchUserDto.lastName, 'i') },
+      { email: new RegExp(searchUserDto.email, 'i') },
+      { phoneNumber: new RegExp(searchUserDto.phoneNumber, 'i') },
+    ];
+
+    return this.userModel.find({
+      $and: options,
+    });
   }
 }
