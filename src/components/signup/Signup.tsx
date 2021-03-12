@@ -92,8 +92,7 @@ export const Signup = () => {
     const passwordValid = formValues.password.match(VALIDATION_REGEX['password'])
       ? true
       : false;
-    const confirmPasswordValid =
-      formValues.password === formValues.confirmPassword ? true : false;
+    const confirmPasswordValid = formValues.password === formValues.confirmPassword;
     const phoneNumberValid = formValues.phoneNumber.match(VALIDATION_REGEX['phoneNumber'])
       ? true
       : false;
