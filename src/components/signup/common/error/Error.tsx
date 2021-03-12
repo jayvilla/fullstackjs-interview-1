@@ -5,5 +5,9 @@ export type ErrorMessage = {
 };
 
 export const Error = (props: ErrorMessage) => {
-  return <div className={styles.error}>{props.message}</div>;
+  return (
+    <div className={styles.error} data-cy='signup-error'>
+      {props.message}
+    </div>
+  );
 };
