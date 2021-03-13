@@ -91,5 +91,6 @@ describe('Sign Up Spec', () => {
     cy.get('[data-cy="input-phoneNumber"]').type('+15106721234');
     cy.get('form').submit();
     cy.get('[data-cy="form-message"]').should('contain.html', 'User already exists');
+    /* Need to delete test user from DB after this runs for it to pass */
   });
 });
