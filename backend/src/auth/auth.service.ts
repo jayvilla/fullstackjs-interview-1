@@ -18,7 +18,8 @@ export class AuthService {
     )[0];
     if (user && user.password === pass) {
       const { password, ...result } = user;
-      return result;
+      // return result;
+      return user;
     }
     return null;
   }
