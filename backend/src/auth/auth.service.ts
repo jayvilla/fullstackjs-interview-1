@@ -30,6 +30,7 @@ export class AuthService {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        phoneNumber: user.phoneNumber,
       },
       sub: user.id,
     };
