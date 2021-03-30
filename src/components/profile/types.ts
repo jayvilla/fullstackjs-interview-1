@@ -35,3 +35,8 @@ export type FormFieldError = {
   error: boolean;
   message: string;
 };
+
+export interface FormMessage {
+  error: boolean;
+  message: string;
+}

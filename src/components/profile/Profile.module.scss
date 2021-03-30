@@ -1,7 +1,7 @@
 .container {
   header {
     background-color: #000000;
-    color: #ffffff;
+    color: rgb(167, 166, 166);
 
     .headerRight {
       display: flex;
@@ -54,5 +54,9 @@
       cursor: pointer;
       margin-top: 10px;
     }
+  }
+
+  .formMessage {
+    font-size: 12px;
   }
 }

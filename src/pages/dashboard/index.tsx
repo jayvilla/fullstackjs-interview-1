@@ -40,7 +40,7 @@ const DashboardPage = (props: InferGetServerSidePropsType<typeof getServerSidePr
       <h1>Dashboard</h1>
       <p>Hi {props.user?.firstName}, congratulations on making it this far! </p>
       <Link href='/dashboard/profile'>
-        <a>Edit Profile</a>
+        <a className='linkToProfile'>Edit Profile</a>
       </Link>
       <Dashboard />
       <div style={{ marginTop: 20 }}>

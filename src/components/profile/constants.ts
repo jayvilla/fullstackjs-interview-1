@@ -32,3 +32,8 @@ export const defaultFormErrors: FormErrors = {
     message: '',
   },
 };
+
+export const defaultFormMessage = {
+  error: false,
+  message: '',
+};
