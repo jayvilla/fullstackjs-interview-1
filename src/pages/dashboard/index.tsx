@@ -2,6 +2,7 @@ import { Dashboard } from '@src/components/dashboard';
 import { LogoutBtn } from '@src/components/LogoutBtn';
 import withSession from '@src/lib/withSession';
 import { InferGetServerSidePropsType } from 'next';
+import Link from 'next/link';
 import React from 'react';
 
 export const getServerSideProps = withSession(async ({ req, res }) => {
@@ -38,6 +39,9 @@ const DashboardPage = (props: InferGetServerSidePropsType<typeof getServerSidePr
     <div>
       <h1>Dashboard</h1>
       <p>Hi {props.user?.firstName}, congratulations on making it this far! </p>
+      <Link href='/dashboard/profile'>
+        <a>Edit Profile</a>
+      </Link>
       <Dashboard />
       <div style={{ marginTop: 20 }}>
         <LogoutBtn>Logout</LogoutBtn>

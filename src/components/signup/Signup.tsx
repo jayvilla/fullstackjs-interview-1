@@ -3,16 +3,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Col, Container, Row } from 'react-grid-system';
+import { AuthAPI, UserAPI } from '../../lib/lib';
+import { VALIDATION_REGEX } from '../../utils/utils';
 import {
   defaultFormMessage,
   defaultSignUpFormErrors,
   defaultSignUpFormValues,
   errorMessages,
 } from './constants';
-import { AuthAPI, UserAPI } from './lib/lib';
 import styles from './Signup.module.scss';
 import { FormMessage, SignUpFormErrors, SignUpFormValues, User } from './types';
-import { VALIDATION_REGEX } from './utils/utils';
 
 export const Signup = () => {
   const router = useRouter();
