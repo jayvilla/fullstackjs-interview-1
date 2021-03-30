@@ -22,23 +22,14 @@ export const Profile = (props: ProfileProps) => {
   const [loading, setLoading] = React.useState<Boolean>(false);
 
   React.useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
-    setLoading(true);
-    const response = await UserAPI.findUserByID(props.user.id);
-    const user = await response.json();
-    setLoading(false);
-
     setFormValues({
       ...formValues,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      phoneNumber: user.phoneNumber,
-      email: user.email,
+      firstName: props.user.firstName,
+      lastName: props.user.lastName,
+      phoneNumber: props.user.phoneNumber,
+      email: props.user.email,
     });
-  };
+  }, []);
 
   const handleFormChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
@@ -64,6 +55,7 @@ export const Profile = (props: ProfileProps) => {
           error: false,
           message: 'Profile successfully updated.',
         });
+        router.reload();
       }
 
       if (!response.ok) {
@@ -141,7 +133,7 @@ export const Profile = (props: ProfileProps) => {
           </Col>
           <Col className={styles.headerRight} md={6}>
             <ul>
-              <li>Profile</li>
+              <li>{props.user.firstName}'s Profile</li>
               <li>
                 <span onClick={handleLogout}>Logout</span>
               </li>

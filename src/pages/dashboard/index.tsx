@@ -27,9 +27,20 @@ export const getServerSideProps = withSession(async ({ req, res }) => {
     };
   }
 
+  let userData;
+
+  try {
+    const response = await fetch(`http://nestjs:3000/users/${user.id}`, {
+      method: 'GET',
+    });
+    userData = await response.json();
+  } catch (e) {
+    console.log(e);
+  }
+
   return {
     props: {
-      user,
+      userData,
     },
   };
 });
@@ -38,7 +49,7 @@ const DashboardPage = (props: InferGetServerSidePropsType<typeof getServerSidePr
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>Hi {props.user?.firstName}, congratulations on making it this far! </p>
+      <p>Hi {props.userData?.firstName}, congratulations on making it this far! </p>
       <Link href='/dashboard/profile'>
         <a className='linkToProfile'>Edit Profile</a>
       </Link>
