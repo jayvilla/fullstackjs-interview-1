@@ -1,6 +1,6 @@
-import { ErrorMessages, FormErrors, FormValues } from './types';
+import { ErrorMessages, ProfileErrors, ProfileMessage, UserProfile } from './types';
 
-export const defaultFormValues: FormValues = {
+export const defaultUserProfile: UserProfile = {
   firstName: '',
   lastName: '',
   email: '',
@@ -14,7 +14,7 @@ export const errorMessages: ErrorMessages = {
   phoneNumber: 'Please enter valid phone number (e.g. +12223334444)',
 };
 
-export const defaultFormErrors: FormErrors = {
+export const defaultProfileErrors: ProfileErrors = {
   firstName: {
     error: false,
     message: '',
@@ -33,7 +33,7 @@ export const defaultFormErrors: FormErrors = {
   },
 };
 
-export const defaultFormMessage = {
+export const defaultProfileMessage: ProfileMessage = {
   error: false,
   message: '',
 };

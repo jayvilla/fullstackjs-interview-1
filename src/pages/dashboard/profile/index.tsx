@@ -24,29 +24,17 @@ export const getServerSideProps = withSession(async ({ req, res }) => {
     };
   }
 
-  let userData;
-
-  try {
-    const response = await fetch(`http://nestjs:3000/users/${user.id}`, {
-      method: 'GET',
-    });
-    userData = await response.json();
-  } catch (e) {
-    console.log(e);
-  }
-
   return {
     props: {
-      userData,
+      user,
     },
   };
 });
 
-const ProfilePage = ({ userData }) => {
-  console.log(userData);
+const ProfilePage = ({ user }) => {
   return (
     <div>
-      <Profile user={userData} />
+      <Profile user={user} />
     </div>
   );
 };

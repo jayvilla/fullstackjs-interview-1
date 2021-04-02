@@ -4,6 +4,7 @@ import withSession from '@src/lib/withSession';
 import { InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
 import React from 'react';
+import { useUser } from '../../hooks';
 
 export const getServerSideProps = withSession(async ({ req, res }) => {
   let user;
@@ -27,29 +28,19 @@ export const getServerSideProps = withSession(async ({ req, res }) => {
     };
   }
 
-  let userData;
-
-  try {
-    const response = await fetch(`http://nestjs:3000/users/${user.id}`, {
-      method: 'GET',
-    });
-    userData = await response.json();
-  } catch (e) {
-    console.log(e);
-  }
-
   return {
     props: {
-      userData,
+      user,
     },
   };
 });
 
 const DashboardPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const user = useUser(props.user.id);
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>Hi {props.userData?.firstName}, congratulations on making it this far! </p>
+      <p>Hi {user?.firstName}, congratulations on making it this far! </p>
       <Link href='/dashboard/profile'>
         <a className='linkToProfile'>Edit Profile</a>
       </Link>

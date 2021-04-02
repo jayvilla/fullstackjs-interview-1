@@ -13,7 +13,7 @@ export type ProfileProps = {
   user: User;
 };
 
-export interface FormValues {
+export interface UserProfile {
   firstName: string;
   lastName: string;
   email: string;
@@ -27,19 +27,19 @@ export interface ErrorMessages {
   phoneNumber: string;
 }
 
-export type FormErrors = {
-  firstName: FormFieldError;
-  lastName: FormFieldError;
-  email: FormFieldError;
-  phoneNumber: FormFieldError;
+export type ProfileErrors = {
+  firstName: ProfileFieldError;
+  lastName: ProfileFieldError;
+  email: ProfileFieldError;
+  phoneNumber: ProfileFieldError;
 };
 
-export type FormFieldError = {
+export type ProfileFieldError = {
   error: boolean;
   message: string;
 };
 
-export interface FormMessage {
+export interface ProfileMessage {
   error: boolean;
   message: string;
 }

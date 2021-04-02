@@ -4,36 +4,43 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Col, Row } from 'react-grid-system';
+import { useUser } from '../../hooks';
 import { Error } from './common';
 import {
-  defaultFormErrors,
-  defaultFormMessage,
-  defaultFormValues,
+  defaultProfileErrors,
+  defaultProfileMessage,
+  defaultUserProfile,
   errorMessages,
 } from './constants';
 import styles from './Profile.module.scss';
-import { FormErrors, FormMessage, FormValues, ProfileProps } from './types';
+import { ProfileErrors, ProfileMessage, ProfileProps, UserProfile } from './types';
 
 export const Profile = (props: ProfileProps) => {
   const router = useRouter();
-  const [formValues, setFormValues] = React.useState<FormValues>(defaultFormValues);
-  const [formErrors, setFormErrors] = React.useState<FormErrors>(defaultFormErrors);
-  const [formMessage, setFormMessage] = React.useState<FormMessage>(defaultFormMessage);
+  const [userProfile, setUserProfile] = React.useState<UserProfile>(defaultUserProfile);
+  const [profileErrors, setProfileErrors] = React.useState<ProfileErrors>(
+    defaultProfileErrors,
+  );
+  const [profileMessage, setProfileMessage] = React.useState<ProfileMessage>(
+    defaultProfileMessage,
+  );
   const [loading, setLoading] = React.useState<Boolean>(false);
 
+  const user = useUser(props.user.id);
+
   React.useEffect(() => {
-    setFormValues({
-      ...formValues,
-      firstName: props.user.firstName,
-      lastName: props.user.lastName,
-      phoneNumber: props.user.phoneNumber,
-      email: props.user.email,
+    setUserProfile({
+      ...userProfile,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
     });
-  }, []);
+  }, [user]);
 
   const handleFormChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues({
-      ...formValues,
+    setUserProfile({
+      ...userProfile,
       [key]: e.target.value,
     });
   };
@@ -46,27 +53,20 @@ export const Profile = (props: ProfileProps) => {
     if (!validForm) return;
 
     try {
-      const response = await UserAPI.updateUser(formValues, props.user.id);
-      console.log(response);
+      const response = await UserAPI.updateUser(userProfile, props.user.id);
       const json = await response.json();
 
       if (response.ok) {
-        setFormMessage({
+        setProfileMessage({
           error: false,
           message: 'Profile successfully updated.',
         });
-        router.reload();
       }
-
-      if (!response.ok) {
-        setFormMessage({
-          error: true,
-          message: `Error: Profile not updated - ${json.message[0]}`,
-        });
-      }
-      console.log(json);
     } catch (e) {
-      console.log(e);
+      setProfileMessage({
+        error: true,
+        message: `Error: Profile not updated - ${e.message}`,
+      });
     }
   };
 
@@ -74,48 +74,56 @@ export const Profile = (props: ProfileProps) => {
     e.preventDefault();
     try {
       const response = await fetch('/api/logout');
-      if (!response.ok) {
-        throw new Error('Could not log out');
+      if (response.ok) {
+        router.push('/login');
       }
-      router.push('/login');
     } catch (e) {
       console.log(e.message);
     }
   };
 
   const validateForm = () => {
-    const firstNameValid = formValues.firstName.match(VALIDATION_REGEX['notEmpty'])
-      ? true
-      : false;
-    const lastNameValid = formValues.lastName.match(VALIDATION_REGEX['notEmpty'])
-      ? true
-      : false;
-    const emailValid = formValues.email.match(VALIDATION_REGEX['email']) ? true : false;
-    const phoneNumberValid = formValues.phoneNumber.match(VALIDATION_REGEX['phoneNumber'])
-      ? true
-      : false;
+    let isFirstNameValid, isLastNameValid, isEmailValid, isPhoneNumberValid;
+    for (let profileField in userProfile) {
+      switch (profileField) {
+        case 'firstName': {
+          isFirstNameValid = !!userProfile.firstName.match(VALIDATION_REGEX['notEmpty']);
+        }
+        case 'lastName': {
+          isLastNameValid = !!userProfile.lastName.match(VALIDATION_REGEX['notEmpty']);
+        }
+        case 'email': {
+          isEmailValid = !!userProfile.email.match(VALIDATION_REGEX['email']);
+        }
+        case 'phoneNumber': {
+          isPhoneNumberValid = !!userProfile.phoneNumber.match(
+            VALIDATION_REGEX['phoneNumber'],
+          );
+        }
+      }
+    }
 
-    setFormErrors((prevState) => ({
+    setProfileErrors((prevState) => ({
       ...prevState,
       firstName: {
-        error: !firstNameValid,
-        message: !firstNameValid ? errorMessages.firstName : '',
+        error: !isFirstNameValid,
+        message: !isFirstNameValid ? errorMessages.firstName : '',
       },
       lastName: {
-        error: !lastNameValid,
-        message: !lastNameValid ? errorMessages.lastName : '',
+        error: !isLastNameValid,
+        message: !isLastNameValid ? errorMessages.lastName : '',
       },
       email: {
-        error: !emailValid,
-        message: !emailValid ? errorMessages.email : '',
+        error: !isEmailValid,
+        message: !isEmailValid ? errorMessages.email : '',
       },
       phoneNumber: {
-        error: !phoneNumberValid,
-        message: !phoneNumberValid ? errorMessages.phoneNumber : '',
+        error: !isPhoneNumberValid,
+        message: !isPhoneNumberValid ? errorMessages.phoneNumber : '',
       },
     }));
 
-    return firstNameValid && lastNameValid && emailValid && phoneNumberValid;
+    return isFirstNameValid && isLastNameValid && isEmailValid && isPhoneNumberValid;
   };
 
   return (
@@ -133,7 +141,7 @@ export const Profile = (props: ProfileProps) => {
           </Col>
           <Col className={styles.headerRight} md={6}>
             <ul>
-              <li>{props.user.firstName}'s Profile</li>
+              <li>Profile</li>
               <li>
                 <span onClick={handleLogout}>Logout</span>
               </li>
@@ -153,12 +161,12 @@ export const Profile = (props: ProfileProps) => {
             <input
               name='firstName'
               type='text'
-              value={formValues.firstName}
+              value={userProfile.firstName}
               onChange={handleFormChange('firstName')}
               data-cy='profile-firstName'
             />
-            {formErrors.firstName.error && formErrors.firstName.message && (
-              <Error message={formErrors.firstName.message} />
+            {profileErrors.firstName.error && profileErrors.firstName.message && (
+              <Error message={profileErrors.firstName.message} />
             )}
           </div>
 
@@ -167,12 +175,12 @@ export const Profile = (props: ProfileProps) => {
             <input
               name='lastName'
               type='text'
-              value={formValues.lastName}
+              value={userProfile.lastName}
               onChange={handleFormChange('lastName')}
               data-cy='profile-lastName'
             />
-            {formErrors.lastName.error && formErrors.lastName.message && (
-              <Error message={formErrors.lastName.message} />
+            {profileErrors.lastName.error && profileErrors.lastName.message && (
+              <Error message={profileErrors.lastName.message} />
             )}
           </div>
 
@@ -181,12 +189,12 @@ export const Profile = (props: ProfileProps) => {
             <input
               name='phoneNumber'
               type='text'
-              value={formValues.phoneNumber}
+              value={userProfile.phoneNumber}
               onChange={handleFormChange('phoneNumber')}
               data-cy='profile-phoneNumber'
             />
-            {formErrors.phoneNumber.error && formErrors.phoneNumber.message && (
-              <Error message={formErrors.phoneNumber.message} />
+            {profileErrors.phoneNumber.error && profileErrors.phoneNumber.message && (
+              <Error message={profileErrors.phoneNumber.message} />
             )}
           </div>
 
@@ -195,12 +203,12 @@ export const Profile = (props: ProfileProps) => {
             <input
               name='email'
               type='text'
-              value={formValues.email}
+              value={userProfile.email}
               onChange={handleFormChange('email')}
               data-cy='profile-email'
             />
-            {formErrors.email.error && formErrors.email.message && (
-              <Error message={formErrors.email.message} />
+            {profileErrors.email.error && profileErrors.email.message && (
+              <Error message={profileErrors.email.message} />
             )}
           </div>
 
@@ -208,22 +216,22 @@ export const Profile = (props: ProfileProps) => {
             <button type='submit'>Save Profile</button>
           </div>
 
-          {!formMessage.error && formMessage.message && (
+          {!profileMessage.error && profileMessage.message && (
             <div
               data-cy='form-message'
               className={styles.formMessage}
               style={{ color: 'green' }}
             >
-              {formMessage.message}
+              {profileMessage.message}
             </div>
           )}
-          {formMessage.error && formMessage.message && (
+          {profileMessage.error && profileMessage.message && (
             <div
               data-cy='form-message'
               className={styles.formMessage}
               style={{ color: 'red' }}
             >
-              {formMessage.message}
+              {profileMessage.message}
             </div>
           )}
         </form>
