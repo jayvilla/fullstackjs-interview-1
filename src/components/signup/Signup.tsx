@@ -82,63 +82,70 @@ export const Signup = () => {
   };
 
   const validateForm = () => {
-    const firstNameValid = formValues.firstName.match(VALIDATION_REGEX['notEmpty'])
-      ? true
-      : false;
-    const lastNameValid = formValues.lastName.match(VALIDATION_REGEX['notEmpty'])
-      ? true
-      : false;
-    const emailValid = formValues.email.match(VALIDATION_REGEX['email']) ? true : false;
-    const passwordValid = formValues.password.match(VALIDATION_REGEX['password'])
-      ? true
-      : false;
-    const confirmPasswordValid = formValues.password === formValues.confirmPassword;
-    const phoneNumberValid = formValues.phoneNumber.match(VALIDATION_REGEX['phoneNumber'])
-      ? true
-      : false;
+    let isFirstNameValid,
+      isLastNameValid,
+      isEmailValid,
+      isPasswordValid,
+      isConfirmPasswordValid,
+      isPhoneNumberValid;
+    for (let field in formValues) {
+      switch (field) {
+        case 'firstName': {
+          isFirstNameValid = !!formValues.firstName.match(VALIDATION_REGEX['notEmpty']);
+        }
+        case 'lastName': {
+          isLastNameValid = !!formValues.lastName.match(VALIDATION_REGEX['notEmpty']);
+        }
+        case 'email': {
+          isEmailValid = !!formValues.email.match(VALIDATION_REGEX['email']);
+        }
+        case 'password': {
+          isPasswordValid = !!formValues.password.match(VALIDATION_REGEX['password']);
+        }
+        case 'confirmPassword': {
+          isConfirmPasswordValid = formValues.password === formValues.confirmPassword;
+        }
+        case 'phoneNumber': {
+          isPhoneNumberValid = !!formValues.phoneNumber.match(VALIDATION_REGEX['phoneNumber']);
+        }
+      }
+    }
 
     setFormErrors((prevState) => ({
       ...prevState,
       firstName: {
-        error: !firstNameValid,
-        message: !firstNameValid ? errorMessages.firstName : '',
+        error: !isFirstNameValid,
+        message: !isFirstNameValid ? errorMessages.firstName : '',
       },
       lastName: {
-        error: !lastNameValid,
-        message: !lastNameValid ? errorMessages.lastName : '',
+        error: !isLastNameValid,
+        message: !isLastNameValid ? errorMessages.lastName : '',
       },
       email: {
-        error: !emailValid,
-        message: !emailValid ? errorMessages.email : '',
+        error: !isEmailValid,
+        message: !isEmailValid ? errorMessages.email : '',
       },
       password: {
-        error: !passwordValid,
-        message: !passwordValid ? errorMessages.password : '',
+        error: !isPasswordValid,
+        message: !isPasswordValid ? errorMessages.password : '',
       },
       confirmPassword: {
-        error: !confirmPasswordValid,
-        message: !confirmPasswordValid ? errorMessages.confirmPassword : '',
+        error: !isConfirmPasswordValid,
+        message: !isConfirmPasswordValid ? errorMessages.confirmPassword : '',
       },
       phoneNumber: {
-        error: !phoneNumberValid,
-        message: !phoneNumberValid ? errorMessages.phoneNumber : '',
+        error: !isPhoneNumberValid,
+        message: !isPhoneNumberValid ? errorMessages.phoneNumber : '',
       },
     }));
 
-    // console.log('firstName valid: ', firstNameValid);
-    // console.log('lastName valid: ', lastNameValid);
-    // console.log('email valid: ', emailValid);
-    // console.log('password valid: ', passwordValid);
-    // console.log('confirmPassword valid: ', confirmPasswordValid);
-    // console.log('phoneNumber valid: ', firstNameValid);
-
     return (
-      firstNameValid &&
-      lastNameValid &&
-      emailValid &&
-      passwordValid &&
-      confirmPasswordValid &&
-      phoneNumberValid
+      isFirstNameValid &&
+      isLastNameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isConfirmPasswordValid &&
+      isPhoneNumberValid
     );
   };
 
