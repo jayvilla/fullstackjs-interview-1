@@ -18,7 +18,7 @@ export const defaultUser = {
   phoneNumber: '',
 };
 
-export const useUser = (id) => {
+export const useUser = (id: string) => {
   const [user, setUser] = React.useState<User>(defaultUser);
 
   React.useEffect(() => {
