@@ -11,7 +11,7 @@ export interface User {
   phoneNumber?: string;
 }
 
-export const defaultUser = {
+export const defaultUser: User = {
   firstName: '',
   lastName: '',
   email: '',
