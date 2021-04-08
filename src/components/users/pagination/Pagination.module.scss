@@ -1,0 +1,27 @@
+.container {
+  width: 340px;
+  margin: 0 auto;
+
+  ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0 10px;
+    }
+
+    li.active {
+      background-color: #3f51b5;
+
+      a {
+        color: #ffffff;
+      }
+    }
+  }
+  .subtext {
+    text-align: center;
+    font-size: 12px;
+  }
+}

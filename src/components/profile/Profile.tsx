@@ -26,16 +26,18 @@ export const Profile = (props: ProfileProps) => {
   );
   const [loading, setLoading] = React.useState<Boolean>(false);
 
-  const user = useUser(props.user.id);
+  const { user, error } = useUser(props.user.id);
 
   React.useEffect(() => {
-    setUserProfile({
-      ...userProfile,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      phoneNumber: user.phoneNumber,
-      email: user.email,
-    });
+    if (user) {
+      setUserProfile({
+        ...userProfile,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+        email: user.email,
+      });
+    }
   }, [user]);
 
   const handleFormChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {

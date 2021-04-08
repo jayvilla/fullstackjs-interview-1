@@ -11,15 +11,9 @@ export interface User {
   phoneNumber?: string;
 }
 
-export const defaultUser: User = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phoneNumber: '',
-};
-
-export const useUser = (id: string) => {
-  const [user, setUser] = React.useState<User>(defaultUser);
+export const useUser = (id: string): { user: User | null; error: string } => {
+  const [user, setUser] = React.useState<User>();
+  const [error, setError] = React.useState();
 
   React.useEffect(() => {
     fetchData();
@@ -31,13 +25,13 @@ export const useUser = (id: string) => {
         method: 'GET',
       });
       const user = await response.json();
-      setUser((prevState) => ({
-        ...user,
-      }));
+      setUser(user);
     } catch (e) {
       console.log(e);
+      setUser(null);
+      setError(e.message);
     }
   };
 
-  return user;
+  return { user, error };
 };

@@ -36,7 +36,7 @@ export const getServerSideProps = withSession(async ({ req, res }) => {
 });
 
 const DashboardPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const user = useUser(props.user.id);
+  const { user, error } = useUser(props.user.id);
   return (
     <div>
       <h1>Dashboard</h1>
