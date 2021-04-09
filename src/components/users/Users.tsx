@@ -37,16 +37,7 @@ export const Users = () => {
   return (
     <div>
       {/* INSERT CODE HERE */}
-      {users && (
-        <UsersTable
-          users={currentUsers}
-          loading={loading}
-          current={currentPage}
-          onChange={paginate}
-          hasNext={currentPage < totalPages}
-          disabled={loading}
-        />
-      )}
+      {users && <UsersTable users={currentUsers} loading={loading} />}
       {users && (
         <Pagination
           current={currentPage}
