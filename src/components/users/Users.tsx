@@ -84,6 +84,7 @@ export const Users = () => {
         onChange={paginate}
         hasNext={currentPage < totalPages}
         disabled={loading}
+        totalPages={totalPages}
       />
     </div>
   );

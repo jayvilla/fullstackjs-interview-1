@@ -6,9 +6,10 @@ import styles from './Pagination.module.scss';
 
 interface PaginationProps {
   current: number;
-  onChange(page: number): void;
+  totalPages: number;
   hasNext: boolean;
   disabled: boolean;
+  onChange(page: number): void;
 }
 
 export const Pagination = (props: PaginationProps) => {
@@ -20,6 +21,10 @@ export const Pagination = (props: PaginationProps) => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.paginationButton}>
+        <span onClick={setPage(1)}>First</span>
+      </div>
+
       <div className={styles.pageNumbers}>
         {props.current > 1 && (
           <PaginationHasPrev
@@ -38,6 +43,10 @@ export const Pagination = (props: PaginationProps) => {
             onSet={setPage(props.current + 1)}
           />
         )}
+      </div>
+
+      <div className={styles.paginationButton}>
+        <span onClick={setPage(props.totalPages)}>Last</span>
       </div>
     </div>
   );

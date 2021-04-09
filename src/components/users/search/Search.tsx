@@ -12,34 +12,36 @@ export const Search = (props: SearchProps) => {
 
   return (
     <div className={styles.container}>
-      <input
-        name='search'
-        type='text'
-        value={props.searchValue}
-        placeholder='Search...'
-        onChange={(e) => props.setSearchValue(e.target.value)}
-      />
-      <div className={styles.checkboxGroup}>
-        {columns &&
-          columns.map((column) => (
-            <div className={styles.checkbox}>
-              <label>
-                <input
-                  type='checkbox'
-                  checked={props.searchColumns.includes(column)}
-                  onChange={(e) => {
-                    const checked = props.searchColumns.includes(column);
-                    props.setSearchColumns((prevState) =>
-                      checked
-                        ? prevState.filter((searchColumn) => searchColumn !== column)
-                        : [...prevState, column],
-                    );
-                  }}
-                />
-                {column}
-              </label>
-            </div>
-          ))}
+      <div className={styles.search}>
+        <input
+          name='search'
+          type='text'
+          value={props.searchValue}
+          placeholder='Search...'
+          onChange={(e) => props.setSearchValue(e.target.value)}
+        />
+        <div className={styles.checkboxGroup}>
+          {columns &&
+            columns.map((column) => (
+              <div className={styles.checkbox}>
+                <label>
+                  <input
+                    type='checkbox'
+                    checked={props.searchColumns.includes(column)}
+                    onChange={(e) => {
+                      const checked = props.searchColumns.includes(column);
+                      props.setSearchColumns((prevState) =>
+                        checked
+                          ? prevState.filter((searchColumn) => searchColumn !== column)
+                          : [...prevState, column],
+                      );
+                    }}
+                  />
+                  {column}
+                </label>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
