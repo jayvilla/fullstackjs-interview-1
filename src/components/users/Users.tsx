@@ -1,6 +1,6 @@
 import { User } from '@src/components/users/types';
 import React from 'react';
-import { UsersTablePagination } from './pagination';
+import { Pagination } from './pagination';
 import { UsersTable } from './users-table';
 
 export const Users = () => {
@@ -24,11 +24,12 @@ export const Users = () => {
     }
   }, []);
 
-  let indexOfLastUser, indexOfFirstUser, currentUsers;
+  let indexOfLastUser, indexOfFirstUser, currentUsers, totalPages;
   if (users) {
     indexOfLastUser = currentPage * usersPerPage;
     indexOfFirstUser = indexOfLastUser - usersPerPage;
     currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+    totalPages = Math.ceil(users.length / usersPerPage);
   }
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -36,13 +37,22 @@ export const Users = () => {
   return (
     <div>
       {/* INSERT CODE HERE */}
-      {users && <UsersTable users={currentUsers} loading={loading} />}
       {users && (
-        <UsersTablePagination
-          currentPage={currentPage}
-          usersPerPage={usersPerPage}
-          totalUsers={users.length}
-          paginate={paginate}
+        <UsersTable
+          users={currentUsers}
+          loading={loading}
+          current={currentPage}
+          onChange={paginate}
+          hasNext={currentPage < totalPages}
+          disabled={loading}
+        />
+      )}
+      {users && (
+        <Pagination
+          current={currentPage}
+          onChange={paginate}
+          hasNext={currentPage < totalPages}
+          disabled={loading}
         />
       )}
     </div>
