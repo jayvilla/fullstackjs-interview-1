@@ -6,6 +6,7 @@ import styles from './UsersTable.module.scss';
 export interface UsersTableProps {
   users: User[];
   loading: boolean;
+  fetchUsers(): void;
 }
 
 export const UsersTable = (props: UsersTableProps) => {
@@ -36,7 +37,7 @@ export const UsersTable = (props: UsersTableProps) => {
               <td>Edit</td>
             </tr>
           ))}
-          <SmartRow />
+          <SmartRow fetchUsers={props.fetchUsers} />
         </tbody>
       </table>
     </div>

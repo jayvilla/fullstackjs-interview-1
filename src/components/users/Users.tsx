@@ -11,18 +11,19 @@ export const Users = () => {
 
   React.useEffect(() => {
     if (!users) {
-      const fetchUsers = async () => {
-        setLoading(true);
-        const response = await fetch(`http://localhost:9001/users`, {
-          method: 'GET',
-        });
-        const users = await response.json();
-        setUsers(users);
-        setLoading(false);
-      };
       fetchUsers();
     }
   }, []);
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    const response = await fetch(`http://localhost:9001/users`, {
+      method: 'GET',
+    });
+    const users = await response.json();
+    setUsers(users);
+    setLoading(false);
+  };
 
   let indexOfLastUser, indexOfFirstUser, currentUsers, totalPages;
   if (users) {
@@ -37,7 +38,7 @@ export const Users = () => {
   return (
     <div>
       {/* INSERT CODE HERE */}
-      {users && <UsersTable users={currentUsers} loading={loading} />}
+      {users && <UsersTable fetchUsers={fetchUsers} users={currentUsers} loading={loading} />}
       {users && (
         <Pagination
           current={currentPage}
