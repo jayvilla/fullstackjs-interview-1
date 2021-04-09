@@ -1,3 +1,8 @@
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import classNames from 'classnames';
 import React from 'react';
 import { UserAPI } from '../../../lib/lib';
 import styles from './SmartRow.module.scss';
@@ -6,13 +11,36 @@ export const defaultUserFieldValues = {
   firstName: '',
   lastName: '',
   email: '',
-  password: '',
   phoneNumber: '',
 };
 
-export const SmartRow = (props) => {
+export interface SmartRowProps {
+  rowType: string;
+  id?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  fetchUsers?(): void;
+}
+
+export const SmartRow = (props: SmartRowProps) => {
   const [userFields, setUserFields] = React.useState(defaultUserFieldValues);
   const [error, setError] = React.useState();
+  const [editable, setEditable] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    setUserFields({
+      firstName: props.firstName,
+      lastName: props.lastName,
+      email: props.email,
+      phoneNumber: props.phoneNumber,
+    });
+  }, []);
+
+  React.useEffect(() => {
+    setEditable(props.rowType === 'addUser');
+  }, []);
 
   const handleUserFieldChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserFields({
@@ -21,7 +49,11 @@ export const SmartRow = (props) => {
     });
   };
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleEdit = (e: React.MouseEvent<HTMLDivElement>) => {
+    setEditable(!editable);
+  };
+
+  const handleAddUser = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     let newUser = { ...userFields, password: '!Test1234', confirmPassword: '!Test1234' };
     try {
@@ -34,10 +66,37 @@ export const SmartRow = (props) => {
     }
   };
 
+  const handleUpdateUser = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    let updatedUser = { ...userFields, password: '!Test1234', confirmPassword: '!Test1234' };
+    try {
+      const response = await UserAPI.updateUser(updatedUser, props.id);
+      const json = await response.json();
+      await props.fetchUsers();
+    } catch (e) {
+      console.log(e);
+      setError(e.message);
+    }
+  };
+
+  const handleDeleteUser = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    try {
+      await UserAPI.deleteUserById(props.id);
+      await props.fetchUsers();
+    } catch (e) {
+      console.log(e);
+      setError(e.message);
+    }
+  };
+
+  const editClass = classNames(styles.edit, editable ? styles.active : '');
+
   return (
-    <tr key='smartRow' className={styles.smartRow}>
+    <tr key={props.phoneNumber} className={styles.smartRow}>
       <td>
         <input
+          disabled={!editable}
           name='firstName'
           placeholder='First Name'
           type='text'
@@ -47,6 +106,7 @@ export const SmartRow = (props) => {
       </td>
       <td>
         <input
+          disabled={!editable}
           name='lastName'
           placeholder='Last Name'
           type='text'
@@ -56,6 +116,7 @@ export const SmartRow = (props) => {
       </td>
       <td>
         <input
+          disabled={!editable}
           name='email'
           placeholder='Email'
           type='text'
@@ -65,6 +126,7 @@ export const SmartRow = (props) => {
       </td>
       <td>
         <input
+          disabled={!editable}
           name='phoneNumber'
           placeholder='Phone Number'
           type='text'
@@ -73,7 +135,28 @@ export const SmartRow = (props) => {
         />
       </td>
       <td>
-        <button onClick={handleSubmit}>Add User</button>
+        <div className={styles.buttonGroup}>
+          {props.rowType === 'addUser' && (
+            <div className={styles.add} onClick={handleAddUser}>
+              <AddCircleIcon />
+            </div>
+          )}
+          {props.rowType === 'userRow' && editable && (
+            <div className={styles.update} onClick={handleUpdateUser}>
+              <SaveIcon />
+            </div>
+          )}
+          {props.rowType === 'userRow' && editable && (
+            <div className={styles.delete} onClick={handleDeleteUser}>
+              <DeleteForeverIcon />
+            </div>
+          )}
+          {props.rowType === 'userRow' && (
+            <div className={editClass} onClick={handleEdit}>
+              <EditIcon />
+            </div>
+          )}
+        </div>
       </td>
     </tr>
   );

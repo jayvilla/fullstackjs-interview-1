@@ -29,15 +29,25 @@ export const UsersTable = (props: UsersTableProps) => {
         <tbody>
           {props.loading && <h1>Fetching users...</h1>}
           {props.users.map((user) => (
-            <tr key={user.phoneNumber}>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{user.email}</td>
-              <td>{user.phoneNumber}</td>
-              <td>Edit</td>
-            </tr>
+            <SmartRow
+              key={user.phoneNumber}
+              rowType={'userRow'}
+              id={user.id}
+              firstName={user.firstName}
+              lastName={user.lastName}
+              email={user.email}
+              phoneNumber={user.phoneNumber}
+              fetchUsers={props.fetchUsers}
+            />
+            // <tr key={user.phoneNumber}>
+            //   <td>{user.firstName}</td>
+            //   <td>{user.lastName}</td>
+            //   <td>{user.email}</td>
+            //   <td>{user.phoneNumber}</td>
+            //   <td>Edit</td>
+            // </tr>
           ))}
-          <SmartRow fetchUsers={props.fetchUsers} />
+          <SmartRow rowType={'addUser'} fetchUsers={props.fetchUsers} />
         </tbody>
       </table>
     </div>

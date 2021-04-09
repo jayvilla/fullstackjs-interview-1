@@ -56,6 +56,19 @@ export const UserAPI = {
 
     return fetch(requestURL, requestOptions);
   },
+  deleteUserById: async (id: string): Promise<Response> => {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const requestOptions = {
+      method: 'DELETE',
+      headers,
+    };
+
+    const requestURL = `http://localhost:9001/users/${id}`;
+
+    return fetch(requestURL, requestOptions);
+  },
 };
 
 export const AuthAPI = {

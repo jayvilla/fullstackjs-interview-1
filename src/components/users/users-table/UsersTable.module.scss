@@ -2,7 +2,7 @@
   width: 100vw;
 
   table {
-    min-width: 1000px;
+    min-width: 1200px;
     border-collapse: collapse;
     margin: 25px auto;
     font-size: 0.9em;
@@ -24,6 +24,7 @@
     td {
       text-align: right;
       padding: 12px 15px;
+      height: 45px;
     }
 
     tbody tr {

@@ -1,0 +1,56 @@
+.smartRow {
+  input {
+    text-align: left;
+    max-width: 150px;
+
+    &:disabled {
+      text-align: right;
+      background: none;
+      outline: none;
+      color: #000000;
+      border: none;
+    }
+  }
+
+  td:last-of-type {
+    min-width: 125px;
+  }
+
+  .buttonGroup {
+    display: flex;
+    justify-content: flex-end;
+
+    div {
+      cursor: pointer;
+      height: 1rem;
+      width: 1.5rem;
+    }
+
+    .add,
+    .update,
+    .delete,
+    .edit {
+      transition: 250ms color ease-in;
+    }
+
+    .add:hover {
+      color: rgb(4, 114, 4);
+    }
+
+    .update:hover {
+      color: rgb(4, 114, 4);
+    }
+
+    .delete:hover {
+      color: rgb(179, 6, 6);
+    }
+
+    .edit:hover {
+      color: orange;
+    }
+
+    .edit.active {
+      color: orange;
+    }
+  }
+}
