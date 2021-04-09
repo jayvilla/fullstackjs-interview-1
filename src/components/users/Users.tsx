@@ -9,7 +9,7 @@ export const Users = () => {
   const [users, setUsers] = React.useState<User[]>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
-  const [usersPerPage] = React.useState<number>(15);
+  const [usersPerPage] = React.useState<number>(13);
   const [columnToSort, setColumnToSort] = React.useState<string>('');
   const [sortDirection, setSortDirection] = React.useState<string>('desc');
   const [searchValue, setSearchValue] = React.useState<string>('');
