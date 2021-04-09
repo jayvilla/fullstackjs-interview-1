@@ -2,6 +2,7 @@ import { User } from '@src/components/users/types';
 import { orderBy } from 'lodash';
 import React from 'react';
 import { Pagination } from './pagination';
+import { Search } from './search';
 import { UsersTable } from './users-table';
 
 export const Users = () => {
@@ -11,6 +12,11 @@ export const Users = () => {
   const [usersPerPage] = React.useState<number>(15);
   const [columnToSort, setColumnToSort] = React.useState<string>('');
   const [sortDirection, setSortDirection] = React.useState<string>('desc');
+  const [searchValue, setSearchValue] = React.useState<string>('');
+  const [searchColumns, setSearchColumns] = React.useState<string[]>([
+    'firstName',
+    'lastName',
+  ]);
 
   React.useEffect(() => {
     if (!users) {
@@ -39,21 +45,33 @@ export const Users = () => {
     setUsers(orderBy(users, [(user) => user[columnName].toLowerCase()], sortDirection));
   };
 
+  const search = (users: User[]) => {
+    return users.filter((user) =>
+      searchColumns.some(
+        (column) =>
+          user[column].toString().toLowerCase().indexOf(searchValue.toLowerCase()) > -1,
+      ),
+    );
+  };
+
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  let indexOfLastUser, indexOfFirstUser, currentUsers, totalPages;
-
-  if (users) {
-    indexOfLastUser = currentPage * usersPerPage;
-    indexOfFirstUser = indexOfLastUser - usersPerPage;
-    currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-    totalPages = Math.ceil(users.length / usersPerPage);
-  }
 
   if (loading || !users) return <h1>Loading user data...</h1>;
 
+  const filteredUsers = search(users);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
   return (
     <div>
+      <Search
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        searchColumns={searchColumns}
+        setSearchColumns={setSearchColumns}
+      />
       <UsersTable
         handleSort={handleSort}
         columnToSort={columnToSort}

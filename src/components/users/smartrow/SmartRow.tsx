@@ -72,6 +72,7 @@ export const SmartRow = (props: SmartRowProps) => {
     try {
       const response = await UserAPI.updateUser(updatedUser, props.id);
       const json = await response.json();
+      setEditable(false);
       await props.fetchUsers();
     } catch (e) {
       console.log(e);

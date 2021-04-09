@@ -1,0 +1,25 @@
+.container {
+  width: 550px;
+  margin: 0 auto;
+
+  input[type='text'] {
+    width: 425px;
+    height: 35px;
+    font-size: 16px;
+    padding-left: 10px;
+
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
+
+  .checkboxGroup {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+  }
+
+  .checkbox {
+    margin: 0 5px;
+  }
+}
