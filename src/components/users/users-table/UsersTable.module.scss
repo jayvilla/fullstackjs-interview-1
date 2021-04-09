@@ -15,6 +15,18 @@
         color: #ffffff;
         text-align: left;
       }
+
+      .arrows {
+        transition: 250ms transform ease-in;
+
+        svg.asc {
+          transform: rotate(180deg);
+        }
+
+        svg.desc {
+          transform: rotate(0);
+        }
+      }
     }
     th {
       text-align: center;

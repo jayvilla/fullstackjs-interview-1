@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { SmartRow } from '../smartrow';
 import { User } from '../types';
@@ -6,6 +7,9 @@ import styles from './UsersTable.module.scss';
 export interface UsersTableProps {
   users: User[];
   loading: boolean;
+  columnToSort: string;
+  sortDirection: string;
+  handleSort?(columnName: string): any;
   fetchUsers(): void;
 }
 
@@ -14,15 +18,29 @@ export const UsersTable = (props: UsersTableProps) => {
     return <h1>Loading...</h1>;
   }
 
+  const firstNameArrowClass = classNames(
+    props.columnToSort === 'firstName' && props.sortDirection === 'asc'
+      ? styles.asc
+      : styles.desc,
+  );
+
   return (
     <div className={styles.container}>
       <table>
         <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
+            <th>
+              <div onClick={props.handleSort('firstName')}>First Name</div>
+            </th>
+            <th>
+              <div onClick={props.handleSort('lastName')}>Last Name</div>
+            </th>
+            <th>
+              <div onClick={props.handleSort('email')}>Email</div>
+            </th>
+            <th>
+              <div onClick={props.handleSort('phoneNumber')}>Phone Number</div>
+            </th>
             <th>Edit</th>
           </tr>
         </thead>
