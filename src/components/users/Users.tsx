@@ -9,8 +9,8 @@ export const Users = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [usersPerPage] = React.useState<number>(15);
-  const [columnToSort, setColumnToSort] = React.useState<string>('firstName');
-  const [sortDirection, setSortDirection] = React.useState<string>('asc');
+  const [columnToSort, setColumnToSort] = React.useState<string>('');
+  const [sortDirection, setSortDirection] = React.useState<string>('desc');
 
   React.useEffect(() => {
     if (!users) {
@@ -33,9 +33,10 @@ export const Users = () => {
       asc: 'desc',
       desc: 'asc',
     };
+
     setColumnToSort(columnName);
     setSortDirection(columnToSort === columnName ? invertDirection[sortDirection] : 'asc');
-    setUsers(orderBy(users, columnToSort, sortDirection));
+    setUsers(orderBy(users, [(user) => user[columnName].toLowerCase()], sortDirection));
   };
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -59,7 +60,6 @@ export const Users = () => {
         sortDirection={sortDirection}
         fetchUsers={fetchUsers}
         users={currentUsers}
-        loading={loading}
       />
       <Pagination
         current={currentPage}

@@ -1,12 +1,12 @@
-import classNames from 'classnames';
+import DownArrow from '@material-ui/icons/ArrowDropDown';
+import UpArrow from '@material-ui/icons/ArrowDropUp';
 import React from 'react';
 import { SmartRow } from '../smartrow';
 import { User } from '../types';
 import styles from './UsersTable.module.scss';
 
-export interface UsersTableProps {
+interface UsersTableProps {
   users: User[];
-  loading: boolean;
   columnToSort: string;
   sortDirection: string;
   handleSort?(columnName: string): any;
@@ -14,38 +14,36 @@ export interface UsersTableProps {
 }
 
 export const UsersTable = (props: UsersTableProps) => {
-  if (props.loading) {
-    return <h1>Loading...</h1>;
-  }
-
-  const firstNameArrowClass = classNames(
-    props.columnToSort === 'firstName' && props.sortDirection === 'asc'
-      ? styles.asc
-      : styles.desc,
-  );
+  const headers = [
+    ['First Name', 'firstName'],
+    ['Last Name', 'lastName'],
+    ['Email', 'email'],
+    ['Phone Number', 'phoneNumber'],
+  ];
 
   return (
     <div className={styles.container}>
       <table>
         <thead>
           <tr>
-            <th>
-              <div onClick={props.handleSort('firstName')}>First Name</div>
-            </th>
-            <th>
-              <div onClick={props.handleSort('lastName')}>Last Name</div>
-            </th>
-            <th>
-              <div onClick={props.handleSort('email')}>Email</div>
-            </th>
-            <th>
-              <div onClick={props.handleSort('phoneNumber')}>Phone Number</div>
-            </th>
+            {headers.map((header, i) => (
+              <th key={i}>
+                <div className={styles.columnHeader} onClick={props.handleSort(header[1])}>
+                  <span className={styles.header}>{header[0]}</span>
+                  {props.columnToSort === header[1] ? (
+                    props.sortDirection === 'asc' ? (
+                      <UpArrow />
+                    ) : (
+                      <DownArrow />
+                    )
+                  ) : null}
+                </div>
+              </th>
+            ))}
             <th>Edit</th>
           </tr>
         </thead>
         <tbody>
-          {props.loading && <h1>Fetching users...</h1>}
           {props.users.map((user) => (
             <SmartRow
               key={user.phoneNumber}
@@ -57,13 +55,6 @@ export const UsersTable = (props: UsersTableProps) => {
               phoneNumber={user.phoneNumber}
               fetchUsers={props.fetchUsers}
             />
-            // <tr key={user.phoneNumber}>
-            //   <td>{user.firstName}</td>
-            //   <td>{user.lastName}</td>
-            //   <td>{user.email}</td>
-            //   <td>{user.phoneNumber}</td>
-            //   <td>Edit</td>
-            // </tr>
           ))}
           <SmartRow rowType={'addUser'} fetchUsers={props.fetchUsers} />
         </tbody>

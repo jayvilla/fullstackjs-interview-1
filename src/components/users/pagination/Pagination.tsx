@@ -4,7 +4,7 @@ import { PaginationHasNext } from './HasNext';
 import { PaginationHasPrev } from './HasPrev';
 import styles from './Pagination.module.scss';
 
-export interface PaginationProps {
+interface PaginationProps {
   current: number;
   onChange(page: number): void;
   hasNext: boolean;

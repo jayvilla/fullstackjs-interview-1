@@ -1,7 +1,7 @@
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import styles from './Pagination.module.scss';
 
-export interface PaginationHasPrevProps {
+interface PaginationHasPrevProps {
   value: number;
   onSet(): void;
   onDecrement(): void;
