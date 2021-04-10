@@ -22,8 +22,8 @@ export const Search = (props: SearchProps) => {
         />
         <div className={styles.checkboxGroup}>
           {columns &&
-            columns.map((column) => (
-              <div className={styles.checkbox}>
+            columns.map((column, i) => (
+              <div key={i} className={styles.checkbox}>
                 <label>
                   <input
                     type='checkbox'

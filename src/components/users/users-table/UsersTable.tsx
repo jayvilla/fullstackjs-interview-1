@@ -44,18 +44,24 @@ export const UsersTable = (props: UsersTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {props.users.map((user) => (
-            <SmartRow
-              key={user.phoneNumber}
-              rowType={'userRow'}
-              id={user.id}
-              firstName={user.firstName}
-              lastName={user.lastName}
-              email={user.email}
-              phoneNumber={user.phoneNumber}
-              fetchUsers={props.fetchUsers}
-            />
-          ))}
+          {!props.users.length && (
+            <tr style={{ width: '100%' }}>
+              <h1 style={{ margin: '0 auto' }}>No users...</h1>
+            </tr>
+          )}
+          {props.users &&
+            props.users.map((user) => (
+              <SmartRow
+                key={user.phoneNumber}
+                rowType={'userRow'}
+                id={user.id}
+                firstName={user.firstName}
+                lastName={user.lastName}
+                email={user.email}
+                phoneNumber={user.phoneNumber}
+                fetchUsers={props.fetchUsers}
+              />
+            ))}
           <SmartRow rowType={'addUser'} fetchUsers={props.fetchUsers} />
         </tbody>
       </table>

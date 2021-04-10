@@ -31,10 +31,10 @@ export const SmartRow = (props: SmartRowProps) => {
 
   React.useEffect(() => {
     setUserFields({
-      firstName: props.firstName,
-      lastName: props.lastName,
-      email: props.email,
-      phoneNumber: props.phoneNumber,
+      firstName: props.firstName || '',
+      lastName: props.lastName || '',
+      email: props.email || '',
+      phoneNumber: props.phoneNumber || '',
     });
   }, []);
 

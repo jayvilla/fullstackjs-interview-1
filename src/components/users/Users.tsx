@@ -46,6 +46,8 @@ export const Users = () => {
   };
 
   const search = (users: User[]) => {
+    if (!searchColumns.length) return users;
+
     return users.filter((user) =>
       searchColumns.some(
         (column) =>
