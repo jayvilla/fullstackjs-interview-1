@@ -20,6 +20,15 @@ export const Search = () => {
     search(users);
   };
 
+  const handleChange = (column: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = searchColumns.includes(column);
+    setSearchColumns((prevState) =>
+      checked
+        ? prevState.filter((searchColumn) => searchColumn !== column)
+        : [...prevState, column],
+    );
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.search}>
@@ -42,14 +51,7 @@ export const Search = () => {
                     <input
                       type='checkbox'
                       checked={searchColumns.includes(column)}
-                      onChange={(e) => {
-                        const checked = searchColumns.includes(column);
-                        setSearchColumns((prevState) =>
-                          checked
-                            ? prevState.filter((searchColumn) => searchColumn !== column)
-                            : [...prevState, column],
-                        );
-                      }}
+                      onChange={handleChange(column)}
                     />
                     {column}
                   </label>
