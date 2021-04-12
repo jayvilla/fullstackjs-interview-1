@@ -45,8 +45,10 @@ export const UsersTable = () => {
         </thead>
         <tbody>
           {!currentUsers.length && (
-            <tr style={{ width: '100%' }}>
-              <h1 style={{ margin: '0 auto' }}>No currentUsers...</h1>
+            <tr>
+              <td>
+                <h1 style={{ textAlign: 'center', margin: '0 auto' }}>No users found...</h1>
+              </td>
             </tr>
           )}
           {currentUsers &&

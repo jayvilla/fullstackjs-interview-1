@@ -4,42 +4,59 @@ import styles from './Search.module.scss';
 
 export const Search = () => {
   const columns = ['firstName', 'lastName', 'email', 'phoneNumber'];
-  const { setSearchValue, searchValue, searchColumns, setSearchColumns } = React.useContext(
-    UsersContext,
-  );
+  const {
+    fetchUsers,
+    setSearchValue,
+    searchValue,
+    searchColumns,
+    setSearchColumns,
+    search,
+    users,
+  } = React.useContext(UsersContext);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchUsers();
+    search(users);
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.search}>
-        <input
-          name='search'
-          type='text'
-          value={searchValue}
-          placeholder='Search...'
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <div className={styles.checkboxGroup}>
-          {columns &&
-            columns.map((column, i) => (
-              <div key={i} className={styles.checkbox}>
-                <label>
-                  <input
-                    type='checkbox'
-                    checked={searchColumns.includes(column)}
-                    onChange={(e) => {
-                      const checked = searchColumns.includes(column);
-                      setSearchColumns((prevState) =>
-                        checked
-                          ? prevState.filter((searchColumn) => searchColumn !== column)
-                          : [...prevState, column],
-                      );
-                    }}
-                  />
-                  {column}
-                </label>
-              </div>
-            ))}
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.formControl}>
+            <input
+              name='search'
+              type='text'
+              value={searchValue}
+              placeholder='Search...'
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+            <input type='submit' value='Search' />
+          </div>
+          <div className={styles.checkboxGroup}>
+            {columns &&
+              columns.map((column, i) => (
+                <div key={i} className={styles.checkbox}>
+                  <label>
+                    <input
+                      type='checkbox'
+                      checked={searchColumns.includes(column)}
+                      onChange={(e) => {
+                        const checked = searchColumns.includes(column);
+                        setSearchColumns((prevState) =>
+                          checked
+                            ? prevState.filter((searchColumn) => searchColumn !== column)
+                            : [...prevState, column],
+                        );
+                      }}
+                    />
+                    {column}
+                  </label>
+                </div>
+              ))}
+          </div>
+        </form>
       </div>
     </div>
   );

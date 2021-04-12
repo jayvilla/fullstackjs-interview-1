@@ -15,6 +15,8 @@ export interface Users {
   paginate(pageNumber: number): void;
   loading: boolean;
   totalPages: number;
+  users: User[];
+  search(users: User[]): any;
 }
 
 export const UsersContext = React.createContext<Partial<Users>>(null);

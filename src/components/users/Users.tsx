@@ -18,6 +18,7 @@ export const Users = () => {
     'firstName',
     'lastName',
   ]);
+  const [filteredUsers, setFilteredUsers] = React.useState<User[]>();
 
   React.useEffect(() => {
     if (!users) {
@@ -49,28 +50,31 @@ export const Users = () => {
   const search = (users: User[]) => {
     if (!searchColumns.length) return users;
 
-    return users.filter((user) =>
+    const filteredUsers = users.filter((user) =>
       searchColumns.some(
         (column) =>
           user[column].toString().toLowerCase().indexOf(searchValue.toLowerCase()) > -1,
       ),
     );
+
+    setFilteredUsers(filteredUsers);
   };
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   if (loading || !users) return <h1>Loading user data...</h1>;
 
-  const filteredUsers = search(users);
+  const filtered = filteredUsers || users;
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = filtered.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(users.length / usersPerPage);
 
   return (
     <div>
       <UsersContext.Provider
         value={{
+          users,
           searchValue,
           setSearchValue,
           searchColumns,
@@ -84,6 +88,7 @@ export const Users = () => {
           paginate,
           loading,
           totalPages,
+          search,
         }}
       >
         <Search />
