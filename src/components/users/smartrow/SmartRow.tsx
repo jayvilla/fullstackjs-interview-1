@@ -2,6 +2,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import { UsersContext } from '@src/context';
 import classNames from 'classnames';
 import React from 'react';
 import { UserAPI } from '../../../lib/lib';
@@ -21,13 +22,14 @@ export interface SmartRowProps {
   lastName?: string;
   email?: string;
   phoneNumber?: string;
-  fetchUsers?(): void;
 }
 
 export const SmartRow = (props: SmartRowProps) => {
   const [userFields, setUserFields] = React.useState(defaultUserFieldValues);
   const [error, setError] = React.useState();
   const [editable, setEditable] = React.useState<boolean>(false);
+
+  const { fetchUsers } = React.useContext(UsersContext);
 
   React.useEffect(() => {
     setUserFields({
@@ -59,7 +61,7 @@ export const SmartRow = (props: SmartRowProps) => {
     try {
       const response = await UserAPI.createUser(newUser);
       const json = await response.json();
-      await props.fetchUsers();
+      await fetchUsers();
     } catch (e) {
       console.log(e);
       setError(e.message);
@@ -73,7 +75,7 @@ export const SmartRow = (props: SmartRowProps) => {
       const response = await UserAPI.updateUser(updatedUser, props.id);
       const json = await response.json();
       setEditable(false);
-      await props.fetchUsers();
+      await fetchUsers();
     } catch (e) {
       console.log(e);
       setError(e.message);
@@ -84,7 +86,7 @@ export const SmartRow = (props: SmartRowProps) => {
     e.preventDefault();
     try {
       await UserAPI.deleteUserById(props.id);
-      await props.fetchUsers();
+      await fetchUsers();
     } catch (e) {
       console.log(e);
       setError(e.message);

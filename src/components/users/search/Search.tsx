@@ -1,14 +1,12 @@
+import { UsersContext } from '@src/context';
+import React from 'react';
 import styles from './Search.module.scss';
 
-export interface SearchProps {
-  searchValue: string;
-  searchColumns: string[];
-  setSearchColumns(any): any;
-  setSearchValue?(value: string): void;
-}
-
-export const Search = (props: SearchProps) => {
+export const Search = () => {
   const columns = ['firstName', 'lastName', 'email', 'phoneNumber'];
+  const { setSearchValue, searchValue, searchColumns, setSearchColumns } = React.useContext(
+    UsersContext,
+  );
 
   return (
     <div className={styles.container}>
@@ -16,9 +14,9 @@ export const Search = (props: SearchProps) => {
         <input
           name='search'
           type='text'
-          value={props.searchValue}
+          value={searchValue}
           placeholder='Search...'
-          onChange={(e) => props.setSearchValue(e.target.value)}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
         <div className={styles.checkboxGroup}>
           {columns &&
@@ -27,10 +25,10 @@ export const Search = (props: SearchProps) => {
                 <label>
                   <input
                     type='checkbox'
-                    checked={props.searchColumns.includes(column)}
+                    checked={searchColumns.includes(column)}
                     onChange={(e) => {
-                      const checked = props.searchColumns.includes(column);
-                      props.setSearchColumns((prevState) =>
+                      const checked = searchColumns.includes(column);
+                      setSearchColumns((prevState) =>
                         checked
                           ? prevState.filter((searchColumn) => searchColumn !== column)
                           : [...prevState, column],

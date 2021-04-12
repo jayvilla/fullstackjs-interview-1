@@ -1,19 +1,19 @@
 import DownArrow from '@material-ui/icons/ArrowDropDown';
 import UpArrow from '@material-ui/icons/ArrowDropUp';
+import { UsersContext } from '@src/context';
 import React from 'react';
 import { SmartRow } from '../smartrow';
-import { User } from '../types';
 import styles from './UsersTable.module.scss';
 
-interface UsersTableProps {
-  users: User[];
-  columnToSort: string;
-  sortDirection: string;
-  handleSort?(columnName: string): any;
-  fetchUsers(): void;
-}
+export const UsersTable = () => {
+  const {
+    handleSort,
+    columnToSort,
+    sortDirection,
+    fetchUsers,
+    currentUsers,
+  } = React.useContext(UsersContext);
 
-export const UsersTable = (props: UsersTableProps) => {
   const headers = [
     ['First Name', 'firstName'],
     ['Last Name', 'lastName'],
@@ -28,10 +28,10 @@ export const UsersTable = (props: UsersTableProps) => {
           <tr>
             {headers.map((header, i) => (
               <th key={i}>
-                <div className={styles.columnHeader} onClick={props.handleSort(header[1])}>
+                <div className={styles.columnHeader} onClick={handleSort(header[1])}>
                   <span className={styles.header}>{header[0]}</span>
-                  {props.columnToSort === header[1] ? (
-                    props.sortDirection === 'asc' ? (
+                  {columnToSort === header[1] ? (
+                    sortDirection === 'asc' ? (
                       <UpArrow />
                     ) : (
                       <DownArrow />
@@ -44,13 +44,13 @@ export const UsersTable = (props: UsersTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {!props.users.length && (
+          {!currentUsers.length && (
             <tr style={{ width: '100%' }}>
-              <h1 style={{ margin: '0 auto' }}>No users...</h1>
+              <h1 style={{ margin: '0 auto' }}>No currentUsers...</h1>
             </tr>
           )}
-          {props.users &&
-            props.users.map((user) => (
+          {currentUsers &&
+            currentUsers.map((user) => (
               <SmartRow
                 key={user.phoneNumber}
                 rowType={'userRow'}
@@ -59,10 +59,9 @@ export const UsersTable = (props: UsersTableProps) => {
                 lastName={user.lastName}
                 email={user.email}
                 phoneNumber={user.phoneNumber}
-                fetchUsers={props.fetchUsers}
               />
             ))}
-          <SmartRow rowType={'addUser'} fetchUsers={props.fetchUsers} />
+          <SmartRow rowType={'addUser'} />
         </tbody>
       </table>
     </div>

@@ -1,23 +1,19 @@
+import { PaginationContext, UsersContext } from '@src/context';
 import classNames from 'classnames';
 import React from 'react';
 import { PaginationHasNext } from './HasNext';
 import { PaginationHasPrev } from './HasPrev';
 import styles from './Pagination.module.scss';
 
-interface PaginationProps {
-  current: number;
-  totalPages: number;
-  hasNext: boolean;
-  disabled: boolean;
-  onChange(page: number): void;
-}
-
-export const Pagination = (props: PaginationProps) => {
-  const increment = () => props.onChange(props.current + 1);
-  const decrement = () => props.onChange(props.current - 1);
-  const setPage = (num: number) => () => props.onChange(num);
+export const Pagination = () => {
+  const { paginate, currentPage, loading, totalPages } = React.useContext(UsersContext);
+  const increment = () => paginate(currentPage + 1);
+  const decrement = () => paginate(currentPage - 1);
+  const setPage = (num: number) => () => paginate(num);
 
   const activeClass = classNames(styles.paginationButton, styles.active);
+
+  const hasNext = currentPage < totalPages;
 
   return (
     <div className={styles.container}>
@@ -25,28 +21,18 @@ export const Pagination = (props: PaginationProps) => {
         <span onClick={setPage(1)}>First</span>
       </div>
 
-      <div className={styles.pageNumbers}>
-        {props.current > 1 && (
-          <PaginationHasPrev
-            value={props.current - 1}
-            onDecrement={decrement}
-            onSet={setPage(props.current - 1)}
-          />
-        )}
-        <div className={activeClass}>
-          <span>{props.current}</span>
+      <PaginationContext.Provider value={{ increment, decrement, setPage }}>
+        <div className={styles.pageNumbers}>
+          {currentPage > 1 && <PaginationHasPrev />}
+          <div className={activeClass}>
+            <span>{currentPage}</span>
+          </div>
+          {hasNext && <PaginationHasNext />}
         </div>
-        {props.hasNext && (
-          <PaginationHasNext
-            value={props.current + 1}
-            onIncrement={increment}
-            onSet={setPage(props.current + 1)}
-          />
-        )}
-      </div>
+      </PaginationContext.Provider>
 
       <div className={styles.paginationButton}>
-        <span onClick={setPage(props.totalPages)}>Last</span>
+        <span onClick={setPage(totalPages)}>Last</span>
       </div>
     </div>
   );

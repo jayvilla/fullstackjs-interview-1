@@ -1,4 +1,5 @@
 import { User } from '@src/components/users/types';
+import { UsersContext } from '@src/context';
 import { orderBy } from 'lodash';
 import React from 'react';
 import { Pagination } from './pagination';
@@ -68,26 +69,27 @@ export const Users = () => {
 
   return (
     <div>
-      <Search
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        searchColumns={searchColumns}
-        setSearchColumns={setSearchColumns}
-      />
-      <UsersTable
-        handleSort={handleSort}
-        columnToSort={columnToSort}
-        sortDirection={sortDirection}
-        fetchUsers={fetchUsers}
-        users={currentUsers}
-      />
-      <Pagination
-        current={currentPage}
-        onChange={paginate}
-        hasNext={currentPage < totalPages}
-        disabled={loading}
-        totalPages={totalPages}
-      />
+      <UsersContext.Provider
+        value={{
+          searchValue,
+          setSearchValue,
+          searchColumns,
+          setSearchColumns,
+          handleSort,
+          columnToSort,
+          sortDirection,
+          fetchUsers,
+          currentUsers,
+          currentPage,
+          paginate,
+          loading,
+          totalPages,
+        }}
+      >
+        <Search />
+        <UsersTable />
+        <Pagination />
+      </UsersContext.Provider>
     </div>
   );
 };

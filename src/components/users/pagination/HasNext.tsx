@@ -1,20 +1,21 @@
 import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded';
+import { PaginationContext, UsersContext } from '@src/context';
+import React from 'react';
 import styles from './Pagination.module.scss';
 
-interface PaginationHasNextProps {
-  value: number;
-  onSet(): void;
-  onIncrement(): void;
-}
+export const PaginationHasNext = () => {
+  const { currentPage } = React.useContext(UsersContext);
+  const { increment, setPage } = React.useContext(PaginationContext);
 
-export const PaginationHasNext = (props: PaginationHasNextProps) => {
+  const value = currentPage + 1;
+
   return (
     <>
-      <div className={styles.paginationButton} onClick={props.onSet}>
-        <span>{props.value}</span>
+      <div className={styles.paginationButton} onClick={setPage(currentPage + 1)}>
+        <span>{value}</span>
       </div>
       <div className={styles.ellipsis}>...</div>
-      <div className={styles.paginationButton} onClick={props.onIncrement}>
+      <div className={styles.paginationButton} onClick={increment}>
         <ChevronRightRoundedIcon />
       </div>
     </>

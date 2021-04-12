@@ -1,21 +1,22 @@
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import { PaginationContext, UsersContext } from '@src/context';
+import React from 'react';
 import styles from './Pagination.module.scss';
 
-interface PaginationHasPrevProps {
-  value: number;
-  onSet(): void;
-  onDecrement(): void;
-}
+export const PaginationHasPrev = () => {
+  const { currentPage } = React.useContext(UsersContext);
+  const { decrement, setPage } = React.useContext(PaginationContext);
 
-export const PaginationHasPrev = (props: PaginationHasPrevProps) => {
+  const value = currentPage - 1;
+
   return (
     <>
-      <div className={styles.paginationButton} onClick={props.onDecrement}>
+      <div className={styles.paginationButton} onClick={decrement}>
         <ChevronLeftRoundedIcon />
       </div>
-      {props.value >= 2 && <div className={styles.ellipsis}>...</div>}
-      <div className={styles.paginationButton} onClick={props.onSet}>
-        <span>{props.value}</span>
+      {value >= 2 && <div className={styles.ellipsis}>...</div>}
+      <div className={styles.paginationButton} onClick={setPage(currentPage - 1)}>
+        <span>{value}</span>
       </div>
     </>
   );
