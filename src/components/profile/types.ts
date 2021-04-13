@@ -13,19 +13,19 @@ export type ProfileProps = {
   user: User;
 };
 
-export interface UserProfile {
+export type UserProfile = {
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
-}
+};
 
-export interface ErrorMessages {
+export type ErrorMessages = {
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
-}
+};
 
 export type ProfileErrors = {
   firstName: ProfileFieldError;

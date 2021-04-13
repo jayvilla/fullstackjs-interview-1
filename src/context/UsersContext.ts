@@ -1,7 +1,7 @@
 import { User } from '@src/components/users/types';
 import React from 'react';
 
-export interface Users {
+export type Users = {
   searchValue: string;
   setSearchValue?(value: string): any;
   searchColumns: string[];
@@ -17,6 +17,6 @@ export interface Users {
   totalPages: number;
   users: User[];
   search(users: User[]): any;
-}
+};
 
 export const UsersContext = React.createContext<Partial<Users>>(null);

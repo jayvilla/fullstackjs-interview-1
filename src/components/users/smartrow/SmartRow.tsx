@@ -15,14 +15,14 @@ export const defaultUserFieldValues = {
   phoneNumber: '',
 };
 
-export interface SmartRowProps {
+export type SmartRowProps = {
   rowType: string;
   id?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
   phoneNumber?: string;
-}
+};
 
 export const SmartRow = (props: SmartRowProps) => {
   const [userFields, setUserFields] = React.useState(defaultUserFieldValues);
