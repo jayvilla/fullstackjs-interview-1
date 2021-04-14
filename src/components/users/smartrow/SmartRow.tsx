@@ -15,7 +15,7 @@ export const defaultUserFieldValues = {
   phoneNumber: '',
 };
 
-export type SmartRowProps = {
+type SmartRowProps = {
   rowType: string;
   id?: string;
   firstName?: string;
@@ -29,7 +29,7 @@ export const SmartRow = (props: SmartRowProps) => {
   const [error, setError] = React.useState();
   const [editable, setEditable] = React.useState<boolean>(false);
 
-  const { fetchUsers } = React.useContext(UsersContext);
+  const { setLoading, setUsers } = React.useContext(UsersContext);
 
   React.useEffect(() => {
     setUserFields({
@@ -43,6 +43,16 @@ export const SmartRow = (props: SmartRowProps) => {
   React.useEffect(() => {
     setEditable(props.rowType === 'addUser');
   }, []);
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    const response = await fetch(`http://localhost:9001/users`, {
+      method: 'GET',
+    });
+    const users = await response.json();
+    setUsers(users);
+    setLoading(false);
+  };
 
   const handleUserFieldChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserFields({

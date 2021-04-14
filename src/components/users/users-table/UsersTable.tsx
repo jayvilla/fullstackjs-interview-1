@@ -4,29 +4,76 @@ import { UsersContext } from '@src/context';
 import React from 'react';
 import { SmartRow } from '../smartrow';
 import styles from './UsersTable.module.scss';
+// import orderBy from 'lodash/orderBy';
 
 export const UsersTable = () => {
   const {
-    handleSort,
     columnToSort,
+    currentPage,
+    filteredUsers,
     sortDirection,
-    fetchUsers,
-    currentUsers,
+    setColumnToSort,
+    setSortDirection,
+    setUsers,
+    setLoading,
+    users,
+    usersPerPage,
   } = React.useContext(UsersContext);
 
-  const headers = [
+  const fetchUsers = async () => {
+    setLoading(true);
+    const response = await fetch(`http://localhost:9001/users`, {
+      method: 'GET',
+    });
+    const users = await response.json();
+    setUsers(users);
+    setLoading(false);
+  };
+
+  const handleSort = (columnToSort: string) => (e: React.MouseEvent<HTMLDivElement>) => {
+    const invertDirection = {
+      asc: 'desc',
+      desc: 'asc',
+    };
+
+    setColumnToSort(columnToSort);
+    setSortDirection(columnToSort === columnToSort ? invertDirection[sortDirection] : 'asc');
+    // setUsers(orderBy(users, [(user) => user[columnToSort].toLowerCase()], sortDirection));
+    setUsers(sortUsers(users, columnToSort, sortDirection));
+  };
+
+  const sortUsers = (users, columnToSort, sortDirection) => {
+    if (sortDirection === 'asc') {
+      return users.sort((a, b) =>
+        a[columnToSort].toLowerCase() > b[columnToSort].toLowerCase() ? 1 : -1,
+      );
+    }
+    if (sortDirection === 'desc') {
+      return users.sort((a, b) =>
+        a[columnToSort].toLowerCase() < b[columnToSort].toLowerCase() ? 1 : -1,
+      );
+    }
+  };
+
+  const columnHeaders = [
     ['First Name', 'firstName'],
     ['Last Name', 'lastName'],
     ['Email', 'email'],
     ['Phone Number', 'phoneNumber'],
   ];
 
+  const filtered = filteredUsers || users;
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filtered.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
   return (
     <div className={styles.container}>
       <table>
         <thead>
           <tr>
-            {headers.map((header, i) => (
+            {columnHeaders.map((header, i) => (
               <th key={i}>
                 <div className={styles.columnHeader} onClick={handleSort(header[1])}>
                   <span className={styles.header}>{header[0]}</span>

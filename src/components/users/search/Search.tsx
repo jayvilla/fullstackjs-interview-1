@@ -1,18 +1,33 @@
+import { User } from '@src/components/users/types';
 import { UsersContext } from '@src/context';
 import React from 'react';
 import styles from './Search.module.scss';
 
 export const Search = () => {
-  const columns = ['firstName', 'lastName', 'email', 'phoneNumber'];
+  const [searchValue, setSearchValue] = React.useState('');
+
   const {
-    fetchUsers,
-    setSearchValue,
-    searchValue,
     searchColumns,
     setSearchColumns,
-    search,
+    setFilteredUsers,
     users,
+    setLoading,
+    setUsers,
   } = React.useContext(UsersContext);
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    const response = await fetch(`http://localhost:9001/users`, {
+      method: 'GET',
+    });
+    const users = await response.json();
+    setUsers(users);
+    setLoading(false);
+  };
+
+  const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,6 +44,21 @@ export const Search = () => {
     );
   };
 
+  const search = (users: User[]) => {
+    if (!searchColumns.length) return users;
+
+    const filteredUsers = users.filter((user) =>
+      searchColumns.some(
+        (column) =>
+          user[column].toString().toLowerCase().indexOf(searchValue.toLowerCase()) > -1,
+      ),
+    );
+
+    setFilteredUsers(filteredUsers);
+  };
+
+  const columnFilters = ['firstName', 'lastName', 'email', 'phoneNumber'];
+
   return (
     <div className={styles.container}>
       <div className={styles.search}>
@@ -39,13 +69,13 @@ export const Search = () => {
               type='text'
               value={searchValue}
               placeholder='Search...'
-              onChange={(e) => setSearchValue(e.target.value)}
+              onChange={handleOnSearchChange}
             />
             <input type='submit' value='Search' />
           </div>
           <div className={styles.checkboxGroup}>
-            {columns &&
-              columns.map((column, i) => (
+            {columnFilters &&
+              columnFilters.map((column, i) => (
                 <div key={i} className={styles.checkbox}>
                   <label>
                     <input

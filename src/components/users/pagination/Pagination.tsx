@@ -6,13 +6,14 @@ import { PaginationHasPrev } from './HasPrev';
 import styles from './Pagination.module.scss';
 
 export const Pagination = () => {
-  const { paginate, currentPage, loading, totalPages } = React.useContext(UsersContext);
-  const increment = () => paginate(currentPage + 1);
-  const decrement = () => paginate(currentPage - 1);
-  const setPage = (num: number) => () => paginate(num);
+  const { currentPage, setCurrentPage, users, usersPerPage } = React.useContext(UsersContext);
+
+  const increment = () => setCurrentPage(currentPage + 1);
+  const decrement = () => setCurrentPage(currentPage - 1);
+  const setPage = (num: number) => () => setCurrentPage(num);
 
   const activeClass = classNames(styles.paginationButton, styles.active);
-
+  const totalPages = Math.ceil(users.length / usersPerPage);
   const hasNext = currentPage < totalPages;
 
   return (

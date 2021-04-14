@@ -1,10 +1,13 @@
 import { Users } from '@src/components/users';
+import { initialState, UsersProvider } from '@src/context';
 import React from 'react';
 
 const UsersPage = () => {
   return (
     <div>
-      <Users />
+      <UsersProvider initialState={initialState}>
+        <Users />
+      </UsersProvider>
     </div>
   );
 };
