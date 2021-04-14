@@ -1,11 +1,11 @@
 import { Users } from '@src/components/users';
-import { initialState, UsersProvider } from '@src/context';
+import { initialUsersState, UsersProvider } from '@src/context';
 import React from 'react';
 
 const UsersPage = () => {
   return (
     <div>
-      <UsersProvider initialState={initialState}>
+      <UsersProvider initialState={initialUsersState}>
         <Users />
       </UsersProvider>
     </div>

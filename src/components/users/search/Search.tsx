@@ -3,7 +3,11 @@ import { UsersContext } from '@src/context';
 import React from 'react';
 import styles from './Search.module.scss';
 
-export const Search = () => {
+type SearchProps = {
+  searchValue?: string;
+};
+
+export const Search = (props: SearchProps) => {
   const [searchValue, setSearchValue] = React.useState('');
 
   const {
@@ -14,6 +18,12 @@ export const Search = () => {
     setLoading,
     setUsers,
   } = React.useContext(UsersContext);
+
+  React.useEffect(() => {
+    if (props && props.searchValue) {
+      setSearchValue(props.searchValue);
+    }
+  });
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -35,13 +45,11 @@ export const Search = () => {
     search(users);
   };
 
-  const handleChange = (column: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxChange = (column: string) => (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const checked = searchColumns.includes(column);
-    setSearchColumns((prevState) =>
-      checked
-        ? prevState.filter((searchColumn) => searchColumn !== column)
-        : [...prevState, column],
-    );
+    setSearchColumns(checked, column);
   };
 
   const search = (users: User[]) => {
@@ -81,7 +89,7 @@ export const Search = () => {
                     <input
                       type='checkbox'
                       checked={searchColumns.includes(column)}
-                      onChange={handleChange(column)}
+                      onChange={handleCheckboxChange(column)}
                     />
                     {column}
                   </label>

@@ -4,7 +4,6 @@ import { UsersContext } from '@src/context';
 import React from 'react';
 import { SmartRow } from '../smartrow';
 import styles from './UsersTable.module.scss';
-// import orderBy from 'lodash/orderBy';
 
 export const UsersTable = () => {
   const {
@@ -19,6 +18,12 @@ export const UsersTable = () => {
     users,
     usersPerPage,
   } = React.useContext(UsersContext);
+
+  React.useEffect(() => {
+    if (!users) {
+      fetchUsers();
+    }
+  }, []);
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -38,7 +43,6 @@ export const UsersTable = () => {
 
     setColumnToSort(columnToSort);
     setSortDirection(columnToSort === columnToSort ? invertDirection[sortDirection] : 'asc');
-    // setUsers(orderBy(users, [(user) => user[columnToSort].toLowerCase()], sortDirection));
     setUsers(sortUsers(users, columnToSort, sortDirection));
   };
 
@@ -66,7 +70,7 @@ export const UsersTable = () => {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filtered.slice(indexOfFirstUser, indexOfLastUser);
-  const totalPages = Math.ceil(users.length / usersPerPage);
+  const totalPages = Math.ceil(filtered.length / usersPerPage);
 
   return (
     <div className={styles.container}>
