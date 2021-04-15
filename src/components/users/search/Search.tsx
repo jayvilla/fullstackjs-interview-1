@@ -4,20 +4,18 @@ import React from 'react';
 import styles from './Search.module.scss';
 
 type SearchProps = {
+  users?: User[];
   searchValue?: string;
+  filteredUsers?: User[];
+  setFilteredUsers?(users: User[]): void;
 };
 
 export const Search = (props: SearchProps) => {
   const [searchValue, setSearchValue] = React.useState('');
+  const [searchColumns, setSearchColumns] = React.useState(['firstName', 'lastName']);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const {
-    searchColumns,
-    setSearchColumns,
-    setFilteredUsers,
-    users,
-    setLoading,
-    setUsers,
-  } = React.useContext(UsersContext);
+  const { setUsers } = React.useContext(UsersContext);
 
   React.useEffect(() => {
     if (props && props.searchValue) {
@@ -42,14 +40,18 @@ export const Search = (props: SearchProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchUsers();
-    search(users);
+    search(props.users);
   };
 
   const handleCheckboxChange = (column: string) => (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const checked = searchColumns.includes(column);
-    setSearchColumns(checked, column);
+    setSearchColumns(
+      checked
+        ? searchColumns.filter((searchColumn) => searchColumn !== column)
+        : [...searchColumns, column],
+    );
   };
 
   const search = (users: User[]) => {
@@ -62,7 +64,7 @@ export const Search = (props: SearchProps) => {
       ),
     );
 
-    setFilteredUsers(filteredUsers);
+    props.setFilteredUsers(filteredUsers);
   };
 
   const columnFilters = ['firstName', 'lastName', 'email', 'phoneNumber'];

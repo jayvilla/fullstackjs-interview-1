@@ -2,7 +2,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
-import { UsersContext } from '@src/context';
+import { User } from '@src/components/users/types';
 import classNames from 'classnames';
 import React from 'react';
 import { UserAPI } from '../../../lib/lib';
@@ -22,14 +22,14 @@ type SmartRowProps = {
   lastName?: string;
   email?: string;
   phoneNumber?: string;
+  setUsers(users: User[]): void;
 };
 
 export const SmartRow = (props: SmartRowProps) => {
   const [userFields, setUserFields] = React.useState(defaultUserFieldValues);
   const [error, setError] = React.useState();
   const [editable, setEditable] = React.useState<boolean>(false);
-
-  const { setLoading, setUsers } = React.useContext(UsersContext);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     setUserFields({
@@ -50,7 +50,7 @@ export const SmartRow = (props: SmartRowProps) => {
       method: 'GET',
     });
     const users = await response.json();
-    setUsers(users);
+    props.setUsers(users);
     setLoading(false);
   };
 
