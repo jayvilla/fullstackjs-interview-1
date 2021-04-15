@@ -2,7 +2,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
-import { User } from '@src/components/users/types';
+import { UsersContext } from '@src/context';
 import classNames from 'classnames';
 import React from 'react';
 import { UserAPI } from '../../../lib/lib';
@@ -22,7 +22,6 @@ type SmartRowProps = {
   lastName?: string;
   email?: string;
   phoneNumber?: string;
-  setUsers(users: User[]): void;
 };
 
 export const SmartRow = (props: SmartRowProps) => {
@@ -30,6 +29,8 @@ export const SmartRow = (props: SmartRowProps) => {
   const [error, setError] = React.useState();
   const [editable, setEditable] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
+
+  const { setUsers } = React.useContext(UsersContext);
 
   React.useEffect(() => {
     setUserFields({
@@ -50,7 +51,7 @@ export const SmartRow = (props: SmartRowProps) => {
       method: 'GET',
     });
     const users = await response.json();
-    props.setUsers(users);
+    setUsers(users);
     setLoading(false);
   };
 
@@ -71,6 +72,7 @@ export const SmartRow = (props: SmartRowProps) => {
     try {
       const response = await UserAPI.createUser(newUser);
       const json = await response.json();
+      setUserFields(defaultUserFieldValues);
       await fetchUsers();
     } catch (e) {
       console.log(e);

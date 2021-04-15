@@ -26,20 +26,26 @@ export const UsersTable = (props: UsersTableProps) => {
       if (props.lower && props.upper) {
         setUsersForTable(filterUsersTable(props.users, props.lower, props.upper));
       }
-    } else {
-      fetchUsers();
-      if (props.lower && props.upper) {
-        setUsersForTable(filterUsersTable(usersForTable, props.lower, props.upper));
-      }
     }
   }, [props.users]);
+
+  React.useEffect(() => {
+    if (!props.users && !usersForTable) {
+      fetchUsers();
+    }
+  }, []);
 
   const fetchUsers = async () => {
     setLoading(true);
     const response = await fetch(`http://localhost:9001/users`, {
       method: 'GET',
     });
-    const usersForTable = await response.json();
+    let usersForTable = await response.json();
+
+    if (props.lower && props.upper) {
+      usersForTable = filterUsersTable(usersForTable, props.lower, props.upper);
+    }
+
     setUsersForTable(usersForTable);
     setLoading(false);
   };
@@ -128,10 +134,9 @@ export const UsersTable = (props: UsersTableProps) => {
                   lastName={user.lastName}
                   email={user.email}
                   phoneNumber={user.phoneNumber}
-                  setUsers={setUsersForTable}
                 />
               ))}
-            <SmartRow rowType={'addUser'} setUsers={setUsersForTable} />
+            <SmartRow rowType={'addUser'} />
           </tbody>
         </table>
         <Pagination

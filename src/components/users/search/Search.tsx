@@ -24,6 +24,7 @@ export const Search = (props: SearchProps) => {
   });
 
   const fetchUsers = async () => {
+    console.log('hello');
     setLoading(true);
     const response = await fetch(`http://localhost:9001/users`, {
       method: 'GET',

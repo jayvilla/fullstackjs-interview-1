@@ -13,7 +13,7 @@ export const Users = () => {
     if (!users) {
       fetchUsers();
     }
-  }, []);
+  }, [users]);
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -31,24 +31,24 @@ export const Users = () => {
 
   return (
     <div>
-      {/* Fix search */}
-      {/* Search through all tables*/}
+      {/* [] Fix search */}
+      {/* [] Search through all tables*/}
       <Search
         users={users}
         filteredUsers={filteredUsers}
         setFilteredUsers={setFilteredUsers}
       />
-      {/* Make table more modular */}
+      {/* [x] Make table more modular */}
       {/* 
-        Render 2 tables
-          A-M table 1
-          M-Z table 2
+        [x] Render 2 tables
+          [x] A-M table 1
+          [x] M-Z table 2
 
-        All updates must show up
+        [] All updates must show up
       */}
       <UsersTable users={filtered} lower={'a'} upper={'m'} />
       <UsersTable users={filtered} lower={'m'} upper={'z'} />
-      {/* Put into users table */}
+      {/* [x] Put into users table */}
     </div>
   );
 };
