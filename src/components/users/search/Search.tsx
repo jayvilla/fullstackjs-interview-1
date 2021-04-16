@@ -12,8 +12,9 @@ type SearchProps = {
 
 export const Search = (props: SearchProps) => {
   const [searchValue, setSearchValue] = React.useState('');
-  const [searchColumns, setSearchColumns] = React.useState(['firstName', 'lastName']);
+  const [searchFilter, setsearchFilter] = React.useState('firstName');
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<boolean>(false);
 
   const { setUsers } = React.useContext(UsersContext);
 
@@ -24,14 +25,18 @@ export const Search = (props: SearchProps) => {
   });
 
   const fetchUsers = async () => {
-    console.log('hello');
-    setLoading(true);
-    const response = await fetch(`http://localhost:9001/users`, {
-      method: 'GET',
-    });
-    const users = await response.json();
-    setUsers(users);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:9001/users`, {
+        method: 'GET',
+      });
+      const users = await response.json();
+      setUsers(users);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setError(e.message);
+    }
   };
 
   const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,28 +49,41 @@ export const Search = (props: SearchProps) => {
     search(props.users);
   };
 
-  const handleCheckboxChange = (column: string) => (
+  const handleCheckboxChange = (filter: string) => (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const checked = searchColumns.includes(column);
-    setSearchColumns(
-      checked
-        ? searchColumns.filter((searchColumn) => searchColumn !== column)
-        : [...searchColumns, column],
-    );
+    if (filter === searchFilter) {
+      filter = '';
+    }
+    setsearchFilter(filter);
   };
 
-  const search = (users: User[]) => {
-    if (!searchColumns.length) return users;
+  const search = async (users: User[]) => {
+    if (!searchFilter || !searchValue) return props.setFilteredUsers(null);
 
-    const filteredUsers = users.filter((user) =>
-      searchColumns.some(
-        (column) =>
-          user[column].toString().toLowerCase().indexOf(searchValue.toLowerCase()) > -1,
-      ),
-    );
+    try {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
 
-    props.setFilteredUsers(filteredUsers);
+      const body = {};
+      body[searchFilter] = searchValue;
+
+      const requestOptions = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+      };
+
+      const response = await fetch('http://localhost:9001/users/search', requestOptions);
+      const filteredUsers = await response.json();
+
+      if (response.ok) {
+        props.setFilteredUsers(filteredUsers);
+      }
+    } catch (e) {
+      console.log(e);
+      setError(e.message);
+    }
   };
 
   const columnFilters = ['firstName', 'lastName', 'email', 'phoneNumber'];
@@ -91,7 +109,7 @@ export const Search = (props: SearchProps) => {
                   <label>
                     <input
                       type='checkbox'
-                      checked={searchColumns.includes(column)}
+                      checked={searchFilter === column}
                       onChange={handleCheckboxChange(column)}
                     />
                     {column}

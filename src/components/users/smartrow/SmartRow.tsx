@@ -46,13 +46,20 @@ export const SmartRow = (props: SmartRowProps) => {
   }, []);
 
   const fetchUsers = async () => {
-    setLoading(true);
-    const response = await fetch(`http://localhost:9001/users`, {
-      method: 'GET',
-    });
-    const users = await response.json();
-    setUsers(users);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:9001/users`, {
+        method: 'GET',
+      });
+      const users = await response.json();
+      if (response.ok) {
+        setUsers(users);
+      }
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setError(e.message);
+    }
   };
 
   const handleUserFieldChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {

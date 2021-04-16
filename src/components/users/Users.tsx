@@ -31,8 +31,12 @@ export const Users = () => {
 
   return (
     <div>
-      {/* [] Fix search */}
-      {/* [] Search through all tables*/}
+      {/* [x] Fix search */}
+
+      {/* [x] Search through all tables
+          [x] Use SearchAPI
+          [] Add new button next to search (Add New User)
+      */}
       <Search
         users={users}
         filteredUsers={filteredUsers}
@@ -44,7 +48,7 @@ export const Users = () => {
           [x] A-M table 1
           [x] M-Z table 2
 
-        [] All updates must show up
+        [x] All updates must show up
       */}
       <UsersTable users={filtered} lower={'a'} upper={'m'} />
       <UsersTable users={filtered} lower={'m'} upper={'z'} />

@@ -19,6 +19,7 @@ export const UsersTable = (props: UsersTableProps) => {
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [usersPerPage] = React.useState<number>(13);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if (props && props.users) {
@@ -36,18 +37,23 @@ export const UsersTable = (props: UsersTableProps) => {
   }, []);
 
   const fetchUsers = async () => {
-    setLoading(true);
-    const response = await fetch(`http://localhost:9001/users`, {
-      method: 'GET',
-    });
-    let usersForTable = await response.json();
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:9001/users`, {
+        method: 'GET',
+      });
 
-    if (props.lower && props.upper) {
-      usersForTable = filterUsersTable(usersForTable, props.lower, props.upper);
+      let usersForTable = await response.json();
+      if (props.lower && props.upper) {
+        usersForTable = filterUsersTable(usersForTable, props.lower, props.upper);
+      }
+
+      setUsersForTable(usersForTable);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setError(e.message);
     }
-
-    setUsersForTable(usersForTable);
-    setLoading(false);
   };
 
   const handleSort = (columnToSort: string) => (e: React.MouseEvent<HTMLDivElement>) => {
