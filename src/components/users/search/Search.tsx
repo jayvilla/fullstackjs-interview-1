@@ -8,6 +8,7 @@ type SearchProps = {
   searchValue?: string;
   filteredUsers?: User[];
   setFilteredUsers?(users: User[]): void;
+  setShowUserModal?(bool: boolean): void;
 };
 
 export const Search = (props: SearchProps) => {
@@ -58,6 +59,10 @@ export const Search = (props: SearchProps) => {
     setsearchFilter(filter);
   };
 
+  const handleOnAddUserClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    props.setShowUserModal(true);
+  };
+
   const search = async (users: User[]) => {
     if (!searchFilter || !searchValue) return props.setFilteredUsers(null);
 
@@ -101,6 +106,9 @@ export const Search = (props: SearchProps) => {
               onChange={handleOnSearchChange}
             />
             <input type='submit' value='Search' />
+            <button className={styles.addUserButton} onClick={handleOnAddUserClick}>
+              Add User +
+            </button>
           </div>
           <div className={styles.checkboxGroup}>
             {columnFilters &&

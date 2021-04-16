@@ -1,4 +1,5 @@
 import { Error } from '@src/components/signup/common/error';
+import { UsersContext } from '@src/context';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -14,8 +15,14 @@ import {
 import styles from './Signup.module.scss';
 import { FormMessage, SignUpFormErrors, SignUpFormValues, User } from './types';
 
-export const Signup = () => {
+type SignupProps = {
+  isModal?: boolean;
+  setShowUserModal?(bool: boolean): void;
+};
+
+export const Signup = (props: SignupProps) => {
   const router = useRouter();
+  const { setUsers } = React.useContext(UsersContext);
 
   const [formValues, setFormValues] = React.useState<SignUpFormValues>(
     defaultSignUpFormValues,
@@ -59,7 +66,26 @@ export const Signup = () => {
         error: false,
         message: 'User successfully created.',
       }));
+
+      if (props.isModal) {
+        fetchUsers();
+        props.setShowUserModal(false);
+        return;
+      }
+
       login(user);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(`http://localhost:9001/users`, {
+        method: 'GET',
+      });
+      const users = await response.json();
+      setUsers(users);
     } catch (e) {
       console.log(e);
     }
@@ -149,12 +175,15 @@ export const Signup = () => {
     );
   };
 
+  const titleText = props.isModal ? 'Add New User' : 'Create Account';
+  const buttonText = props.isModal ? 'Add' : 'Sign Up';
+
   return (
     <Container className={styles.container}>
       <Row>
         <Col xs={0} sm={4} className={styles.block}></Col>
         <Col xs={12} sm={8} className={styles.formContainer}>
-          <h1>Create Account</h1>
+          <h1>{titleText}</h1>
           <form onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
               <input
@@ -253,7 +282,7 @@ export const Signup = () => {
             </div>
 
             <div className={styles.formGroup}>
-              <button type='submit'>Sign Up</button>
+              <button type='submit'>{buttonText}</button>
             </div>
 
             <div className={styles.formGroup}>
@@ -271,12 +300,14 @@ export const Signup = () => {
             </div>
 
             <div className={[styles.formGroup, styles.signIn].join(' ')}>
-              <p>
-                Already have an account?{'  '}
-                <span>
-                  <Link href='/login'>Sign in</Link>
-                </span>
-              </p>
+              {!props.isModal && (
+                <p>
+                  Already have an account?{'  '}
+                  <span>
+                    <Link href='/login'>Sign in</Link>
+                  </span>
+                </p>
+              )}
             </div>
           </form>
         </Col>

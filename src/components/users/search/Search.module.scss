@@ -3,8 +3,17 @@
   margin: 0 auto;
 
   .search {
-    width: 430px;
-    margin: 50px auto 0 auto;
+    width: 1200px;
+    padding-top: 50px;
+    margin: 0 auto;
+  }
+
+  .addUserButton {
+    margin-left: 725px;
+    outline: none !important;
+    background-color: rgb(4, 114, 4);
+    color: #ffffff;
+    width: 100px;
   }
 
   .formControl {
@@ -12,11 +21,12 @@
   }
 
   input[type='text'] {
-    width: 425px;
+    width: 375px;
     height: 35px;
     font-size: 16px;
     padding-left: 10px;
     border-right: none;
+    margin-left: 7.5px;
 
     &::placeholder {
       font-size: 16px;

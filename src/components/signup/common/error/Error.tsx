@@ -1,12 +1,12 @@
 import styles from './Error.module.scss';
 
-export type ErrorMessage = {
+export type ErrorProps = {
   message: string;
 };
 
-export const Error = (props: ErrorMessage) => {
+export const Error = (props: ErrorProps) => {
   return (
-    <div className={styles.error} data-cy='profile-error'>
+    <div className={styles.error} data-cy='signup-error'>
       {props.message}
     </div>
   );
