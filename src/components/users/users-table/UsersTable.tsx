@@ -22,21 +22,24 @@ export const UsersTable = (props: UsersTableProps) => {
   const [error, setError] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    if (props && props.users) {
-      setUsersForTable(props.users);
-      if (props.lower && props.upper) {
-        setUsersForTable(filterUsersTable(props.users, props.lower, props.upper));
-      }
-    }
-  }, [props.users]);
-
-  React.useEffect(() => {
     if (!props.users && !usersForTable) {
-      fetchUsers();
+      fetchUsersForTable();
+      setCurrentPage(1);
     }
   }, []);
 
-  const fetchUsers = async () => {
+  React.useEffect(() => {
+    if (props && props.users) {
+      setUsersForTable(props.users);
+      setCurrentPage(1);
+      if (props.lower && props.upper) {
+        setUsersForTable(filterUsersTable(props.users, props.lower, props.upper));
+        setCurrentPage(1);
+      }
+    }
+  }, [props.users, props.upper, props.lower]);
+
+  const fetchUsersForTable = async () => {
     try {
       setLoading(true);
       const response = await fetch(`http://localhost:9001/users`, {
@@ -81,7 +84,7 @@ export const UsersTable = (props: UsersTableProps) => {
   };
 
   const filterUsersTable = (users: User[], lower: string, upper: string) => {
-    let regexpStr = `[${lower}-${upper}]`;
+    let regexpStr = `[${lower.toLowerCase()}-${upper.toLowerCase()}]`;
     let regexp = new RegExp(regexpStr, 'gi');
     return users.filter((user) => !!user.firstName[0].match(regexp));
   };

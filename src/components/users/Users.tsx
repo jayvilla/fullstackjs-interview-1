@@ -1,14 +1,14 @@
-import { User } from '@src/components/users/types';
 import { UsersContext } from '@src/context';
 import React from 'react';
 import { AddUserModal } from '../modals/';
+import { Signup } from '../signup';
 import { Search } from './search';
 import { UsersTable } from './users-table';
+import styles from './Users.module.scss';
 
 export const Users = () => {
   const { users, setUsers } = React.useContext(UsersContext);
-  const [filteredUsers, setFilteredUsers] = React.useState<User[]>();
-  const [showUserModal, setShowUserModal] = React.useState<boolean>(false);
+  const [showModal, setShowModal] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -27,14 +27,20 @@ export const Users = () => {
     setLoading(false);
   };
 
+  const handleModalClick = () => {
+    setShowModal(!showModal);
+  };
+
+  const handleOnSubmit = () => {
+    setShowModal(false);
+  };
+
   if (loading || !users) return <h1>Loading user data...</h1>;
 
-  const filtered = filteredUsers || users;
-
   return (
-    <div>
+    <div className={styles.container}>
       {/* 
-      REQUIREMENTS:
+      REQUIREMENTS SEARCH:
         [x] Fix search
         [x] Search through all tables
         [x] Use SearchAPI
@@ -45,17 +51,35 @@ export const Users = () => {
         [x] A-M table 1
         [x] M-Z table 2
         [x] All updates must show up
-        [x] Add new button next to search (Add New User) and create modal to add user using signup 
+        [x] Add new button next to search (Add New User) and create modal to add user using signup
+        [x] Create modal for signup
+        [x] Make modal dismissable click outside
+
+        REQUIREMENTS BUTTON:
+        (Tailwind css styles frame of reference);
+        (Keep mobile in mind);
+        [] Create a generic button to reuse
+        [] Create a generic text/input field
+        [] Create a generic select drop down
+        [] Create a generic radio buttons
+        [] Create a generic tooltip
+        [] Create a generic date picker
+        [] Create a generic drawer
       */}
-      {showUserModal && <AddUserModal setShowUserModal={setShowUserModal} />}
-      <Search
-        users={users}
-        filteredUsers={filteredUsers}
-        setFilteredUsers={setFilteredUsers}
-        setShowUserModal={setShowUserModal}
-      />
-      <UsersTable users={filtered} lower={'a'} upper={'m'} />
-      <UsersTable users={filtered} lower={'m'} upper={'z'} />
+
+      <AddUserModal onClick={handleModalClick} isVisible={showModal}>
+        <Signup
+          handleOnSubmit={handleOnSubmit}
+          titleText={'Add New User'}
+          buttonText={'Add'}
+        />
+      </AddUserModal>
+      <div className={styles.buttonContainer}>
+        <button onClick={handleModalClick}>Add User +</button>
+      </div>
+      <Search fetchUsers={fetchUsers} />
+      <UsersTable users={users} lower={'a'} upper={'m'} />
+      <UsersTable users={users} lower={'m'} upper={'z'} />
     </div>
   );
 };

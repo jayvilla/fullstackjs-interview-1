@@ -12,6 +12,8 @@ type PaginationProps = {
 };
 
 export const Pagination = (props: PaginationProps) => {
+  // Put state in pagination to function on its own
+
   const increment = () => props.setCurrentPage(props.currentPage + 1);
   const decrement = () => props.setCurrentPage(props.currentPage - 1);
   const setPage = (num: number) => () => props.setCurrentPage(num);

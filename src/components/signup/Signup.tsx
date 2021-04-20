@@ -16,8 +16,9 @@ import styles from './Signup.module.scss';
 import { FormMessage, SignUpFormErrors, SignUpFormValues, User } from './types';
 
 type SignupProps = {
-  isModal?: boolean;
-  setShowUserModal?(bool: boolean): void;
+  buttonText?: string;
+  titleText?: string;
+  handleOnSubmit?(): void;
 };
 
 export const Signup = (props: SignupProps) => {
@@ -67,9 +68,9 @@ export const Signup = (props: SignupProps) => {
         message: 'User successfully created.',
       }));
 
-      if (props.isModal) {
+      if (props.handleOnSubmit) {
         fetchUsers();
-        props.setShowUserModal(false);
+        props.handleOnSubmit();
         return;
       }
 
@@ -175,8 +176,8 @@ export const Signup = (props: SignupProps) => {
     );
   };
 
-  const titleText = props.isModal ? 'Add New User' : 'Create Account';
-  const buttonText = props.isModal ? 'Add' : 'Sign Up';
+  const titleText = props.titleText || 'Create Account';
+  const buttonText = props.buttonText || 'Sign Up';
 
   return (
     <Container className={styles.container}>
@@ -300,7 +301,7 @@ export const Signup = (props: SignupProps) => {
             </div>
 
             <div className={[styles.formGroup, styles.signIn].join(' ')}>
-              {!props.isModal && (
+              {(!props.titleText || !props.buttonText) && (
                 <p>
                   Already have an account?{'  '}
                   <span>

@@ -4,50 +4,30 @@ import React from 'react';
 import styles from './Search.module.scss';
 
 type SearchProps = {
-  users?: User[];
   searchValue?: string;
-  filteredUsers?: User[];
-  setFilteredUsers?(users: User[]): void;
-  setShowUserModal?(bool: boolean): void;
+  fetchUsers?(): void;
 };
 
 export const Search = (props: SearchProps) => {
-  const [searchValue, setSearchValue] = React.useState('');
+  const [searchValue, setSearchValue] = React.useState(props.searchValue || '');
   const [searchFilter, setsearchFilter] = React.useState('firstName');
-  const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<boolean>(false);
 
-  const { setUsers } = React.useContext(UsersContext);
+  const { users, setUsers } = React.useContext(UsersContext);
 
   React.useEffect(() => {
-    if (props && props.searchValue) {
+    if (props.searchValue) {
       setSearchValue(props.searchValue);
     }
-  });
+  }, [props.searchValue]);
 
-  const fetchUsers = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`http://localhost:9001/users`, {
-        method: 'GET',
-      });
-      const users = await response.json();
-      setUsers(users);
-      setLoading(false);
-    } catch (e) {
-      console.log(e);
-      setError(e.message);
-    }
-  };
-
-  const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetchUsers();
-    search(props.users);
+    search(users);
   };
 
   const handleCheckboxChange = (filter: string) => (
@@ -59,12 +39,11 @@ export const Search = (props: SearchProps) => {
     setsearchFilter(filter);
   };
 
-  const handleOnAddUserClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    props.setShowUserModal(true);
-  };
-
   const search = async (users: User[]) => {
-    if (!searchFilter || !searchValue) return props.setFilteredUsers(null);
+    if (!searchValue || !searchFilter) {
+      props.fetchUsers();
+      return;
+    }
 
     try {
       let headers = new Headers();
@@ -83,7 +62,7 @@ export const Search = (props: SearchProps) => {
       const filteredUsers = await response.json();
 
       if (response.ok) {
-        props.setFilteredUsers(filteredUsers);
+        setUsers(filteredUsers);
       }
     } catch (e) {
       console.log(e);
@@ -96,19 +75,16 @@ export const Search = (props: SearchProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.search}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleOnSubmit}>
           <div className={styles.formControl}>
             <input
               name='search'
               type='text'
               value={searchValue}
               placeholder='Search...'
-              onChange={handleOnSearchChange}
+              onChange={handleOnInputChange}
             />
             <input type='submit' value='Search' />
-            <button className={styles.addUserButton} onClick={handleOnAddUserClick}>
-              Add User +
-            </button>
           </div>
           <div className={styles.checkboxGroup}>
             {columnFilters &&
